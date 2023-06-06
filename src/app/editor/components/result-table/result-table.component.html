@@ -1,33 +1,19 @@
 <h4>Result</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th *ngFor="let col of cols">{{ col }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items; index as i">
+      <td *ngFor="let key of cols" contenteditable #details (blur)="items[i][key] = details.innerText">
+        {{ item[key] }}
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-<ng-container *ngIf="items.length; else fallback">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th *ngFor="let col of cols">{{ col }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of items; index as i">
-        <td *ngFor="let key of cols" contenteditable #details (blur)="items[i][key] = details.innerText">
-          {{ item[key] }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <button
-    type="button"
-    class="btn btn-primary align-self-end"
-    [ngClass]="{ 'd-none': !items.length }"
-    (click)="unload()"
-  >
-    Unload
-  </button>
-</ng-container>
-
-<ng-template #fallback>
-  <small class="text-secondary">{{
-    data ? 'No items in table data :(' : 'Please input JSON data and press "Continue"'
-  }}</small>
-</ng-template>
+<button type="button" class="btn btn-primary align-self-end" [ngClass]="{ 'd-none': !items.length }" (click)="unload()">
+  Unload
+</button>
