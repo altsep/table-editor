@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered" style="table-layout: fixed">
   <thead>
     <tr>
       <th class="col" *ngFor="let col of cols; index as i" (click)="sort(col, i)">
@@ -16,9 +16,9 @@
   <tbody>
     <tr *ngFor="let item of items; index as i">
       <td
+        #details
         *ngFor="let col of cols"
         contenteditable
-        #details
         (blur)="items[i][col.name] = details.innerText; itemsChange.emit(items)"
       >
         {{ item[col.name] }}
