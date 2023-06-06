@@ -1,14 +1,17 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableData } from '../../models/table.model';
 
+interface Col {
+  name: string;
+  sortType?: 'asc' | 'desc';
+}
+
 @Component({
   selector: 'app-result-table',
   templateUrl: './result-table.component.html',
   styleUrls: ['./result-table.component.scss'],
 })
 export class ResultTableComponent {
-  private _data?: string;
-
   public get data(): string | undefined {
     return this._data;
   }
@@ -20,11 +23,25 @@ export class ResultTableComponent {
     }
   }
 
-  public cols: string[] = [];
+  public cols: Col[] = [];
 
   public items: TableData = [];
 
   @Output() public itemsChange = new EventEmitter<string>();
+
+  public sortType?: 'asc' | 'desc' = 'asc';
+
+  private _data?: string;
+
+  public sort({ name, sortType }: Col, i: number): void {
+    if (sortType === 'desc') {
+      this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? -1 : 1));
+      this.cols[i].sortType = 'asc';
+    } else {
+      this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? 1 : -1));
+      this.cols[i].sortType = 'desc';
+    }
+  }
 
   public unload(): void {
     const mutatedData = JSON.stringify(this.items);
@@ -42,7 +59,7 @@ export class ResultTableComponent {
   }
 
   private setCols(parsedValue: TableData): void {
-    this.cols = [...new Set(parsedValue.map(Object.keys).flat())];
+    this.cols = [...new Set(parsedValue.map(Object.keys).flat())].map((name) => ({ name, sortType: undefined }));
   }
 
   private static parseValue(value: string): TableData | null {
