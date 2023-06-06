@@ -18,9 +18,9 @@ export class InputAreaComponent {
     }
   }
 
-  @Output() public sourceDataChange = new EventEmitter<string>();
+  @Output() public dataChange = new EventEmitter<string>();
 
   public onSubmit(): void {
-    this.sourceDataChange.emit(this.data);
+    this.dataChange.emit(this.data);
   }
 }
