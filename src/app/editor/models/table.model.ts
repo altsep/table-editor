@@ -1,1 +1,3 @@
-export type TableData = Record<string, unknown>[];
+export type TableItem = Record<string, unknown>;
+
+export type TableData = TableItem[];

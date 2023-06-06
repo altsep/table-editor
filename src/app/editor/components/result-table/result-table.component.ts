@@ -9,14 +9,14 @@ import { TableData } from '../../models/table.model';
 export class ResultTableComponent implements OnChanges {
   @Input() public data?: string;
 
-  public items?: TableData;
+  public items: TableData = [];
 
-  public cols?: string[];
+  public cols: string[] = [];
 
   public ngOnChanges(changes: SimpleChanges): void {
     const { data: dataChange } = changes;
 
-    if (typeof dataChange.currentValue === 'string' && dataChange.currentValue !== dataChange.previousValue) {
+    if (typeof dataChange.currentValue === 'string') {
       this.handleDataChange(dataChange.currentValue);
     }
   }
@@ -24,7 +24,7 @@ export class ResultTableComponent implements OnChanges {
   private handleDataChange(value: string): void {
     const parsedValue = ResultTableComponent.parseValue(value);
 
-    if (parsedValue !== null) {
+    if (parsedValue != null) {
       this.items = parsedValue;
       this.setCols(parsedValue);
     }
