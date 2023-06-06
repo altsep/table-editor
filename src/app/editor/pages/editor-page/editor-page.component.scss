@@ -6,5 +6,9 @@
 @media (min-width: 1280px) {
   .editor-page {
     flex-direction: row;
+
+    & > * {
+      width: 50%;
+    }
   }
 }

@@ -1,2 +1,5 @@
-<h4>Input</h4>
-<textarea class="form-control" id="textarea" rows="3"></textarea>
+<form class="d-flex flex-column gap-3" action="" (submit)="onSubmit()">
+  <h4>Input</h4>
+  <textarea class="form-control" id="textarea" name="textarea" rows="3" [(ngModel)]="value"></textarea>
+  <button [disabled]="!value" type="submit" class="btn btn-primary align-self-end">Continue</button>
+</form>
