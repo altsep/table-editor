@@ -1,12 +1,13 @@
 <h4>Result</h4>
 
-<app-result-table [items]="items" (dataChange)="dataChange.emit($event)" (itemsChange)="items = $event" />
+<ng-container *ngIf="data; else fallback">
+  <app-result-table [items]="items" (itemsChange)="items = $event" />
+</ng-container>
 
-<button
-  type="button"
-  class="btn btn-primary align-self-end"
-  [ngClass]="{ 'd-none': items && !items.length }"
-  (click)="unload()"
->
+<button type="button" class="btn btn-primary align-self-end mt-auto" [disabled]="!items.length" (click)="unload()">
   Unload
 </button>
+
+<ng-template #fallback>
+  <small class="text-secondary">No data received yet</small>
+</ng-template>

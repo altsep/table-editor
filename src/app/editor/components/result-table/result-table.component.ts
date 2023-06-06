@@ -17,8 +17,6 @@ export class ResultTableComponent implements OnChanges {
 
   @Input() public items: TableData = [];
 
-  @Output() public dataChange = new EventEmitter<string>();
-
   @Output() public itemsChange = new EventEmitter<TableData>();
 
   public sortType?: 'asc' | 'desc' = 'asc';
@@ -28,7 +26,7 @@ export class ResultTableComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     const { items: itemsChange } = changes;
 
-    if (!itemsChange.firstChange && itemsChange.currentValue != null) {
+    if (itemsChange.currentValue != null) {
       const currentValue = itemsChange.currentValue as TableData;
       this.setCols(currentValue);
     }
