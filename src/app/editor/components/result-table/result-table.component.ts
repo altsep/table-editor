@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableData } from '../../models/table.model';
 
 @Component({
@@ -6,19 +6,30 @@ import { TableData } from '../../models/table.model';
   templateUrl: './result-table.component.html',
   styleUrls: ['./result-table.component.scss'],
 })
-export class ResultTableComponent implements OnChanges {
-  @Input() public data?: string;
+export class ResultTableComponent {
+  private _data?: string;
 
-  public items: TableData = [];
+  public get data(): string | undefined {
+    return this._data;
+  }
+
+  @Input() public set data(value: string | undefined) {
+    if (value != null && value !== this._data) {
+      this._data = value;
+      this.handleDataChange(value);
+    }
+  }
 
   public cols: string[] = [];
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { data: dataChange } = changes;
+  public items: TableData = [];
 
-    if (typeof dataChange.currentValue === 'string') {
-      this.handleDataChange(dataChange.currentValue);
-    }
+  @Output() public itemsChange = new EventEmitter<string>();
+
+  public unload(): void {
+    const mutatedData = JSON.stringify(this.items);
+    this._data = mutatedData;
+    this.itemsChange.emit(mutatedData);
   }
 
   private handleDataChange(value: string): void {

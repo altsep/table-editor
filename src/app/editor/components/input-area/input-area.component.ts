@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-input-area',
@@ -6,11 +6,21 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./input-area.component.scss'],
 })
 export class InputAreaComponent {
-  public value = '[{"name":"Name 1","year":"2010"},{"name":"Name 2","year":"1997"},{"name":"Name 3","year":"2004"}]';
+  private _data = '[{"name":"Name 1","year":"2010"},{"name":"Name 2","year":"1997"},{"name":"Name 3","year":"2004"}]';
+
+  public get data(): string {
+    return this._data;
+  }
+
+  @Input() public set data(value: string | undefined) {
+    if (value != null && value !== this._data) {
+      this._data = value;
+    }
+  }
 
   @Output() public sourceDataChange = new EventEmitter<string>();
 
   public onSubmit(): void {
-    this.sourceDataChange.emit(this.value);
+    this.sourceDataChange.emit(this.data);
   }
 }
