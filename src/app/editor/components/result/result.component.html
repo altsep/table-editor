@@ -1,0 +1,12 @@
+<h4>Result</h4>
+
+<app-result-table [items]="items" (dataChange)="dataChange.emit($event)" (itemsChange)="items = $event" />
+
+<button
+  type="button"
+  class="btn btn-primary align-self-end"
+  [ngClass]="{ 'd-none': items && !items.length }"
+  (click)="unload()"
+>
+  Unload
+</button>

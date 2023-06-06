@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { TableData } from '../../models/table.model';
+import { UtilService } from '../../services/util.service';
 
 interface Col {
   name: string;
@@ -11,27 +12,27 @@ interface Col {
   templateUrl: './result-table.component.html',
   styleUrls: ['./result-table.component.scss'],
 })
-export class ResultTableComponent {
-  public get data(): string | undefined {
-    return this._data;
-  }
-
-  @Input() public set data(value: string | undefined) {
-    if (value != null && value !== this._data) {
-      this._data = value;
-      this.handleDataChange(value);
-    }
-  }
-
+export class ResultTableComponent implements OnChanges {
   public cols: Col[] = [];
 
-  public items: TableData = [];
+  @Input() public items: TableData = [];
 
-  @Output() public itemsChange = new EventEmitter<string>();
+  @Output() public dataChange = new EventEmitter<string>();
+
+  @Output() public itemsChange = new EventEmitter<TableData>();
 
   public sortType?: 'asc' | 'desc' = 'asc';
 
-  private _data?: string;
+  constructor(public utilService: UtilService) {}
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    const { items: itemsChange } = changes;
+
+    if (!itemsChange.firstChange && itemsChange.currentValue != null) {
+      const currentValue = itemsChange.currentValue as TableData;
+      this.setCols(currentValue);
+    }
+  }
 
   public sort({ name, sortType }: Col, i: number): void {
     if (sortType === 'desc') {
@@ -43,37 +44,7 @@ export class ResultTableComponent {
     }
   }
 
-  public unload(): void {
-    const mutatedData = JSON.stringify(this.items);
-    this._data = mutatedData;
-    this.itemsChange.emit(mutatedData);
-  }
-
-  private handleDataChange(value: string): void {
-    const parsedValue = ResultTableComponent.parseValue(value);
-
-    if (parsedValue != null) {
-      this.items = parsedValue;
-      this.setCols(parsedValue);
-    }
-  }
-
-  private setCols(parsedValue: TableData): void {
-    this.cols = [...new Set(parsedValue.map(Object.keys).flat())].map((name) => ({ name, sortType: undefined }));
-  }
-
-  private static parseValue(value: string): TableData | null {
-    try {
-      const data = JSON.parse(value) as object;
-
-      if (!Array.isArray(data) || data.some((el) => el instanceof Object !== true)) {
-        throw new TypeError('Expected an array of objects');
-      }
-
-      return data as TableData;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
+  private setCols(items: TableData): void {
+    this.cols = [...new Set(items.map(Object.keys).flat())].map((name) => ({ name, sortType: undefined }));
   }
 }

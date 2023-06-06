@@ -1,4 +1,4 @@
 <div class="editor-page d-flex p-2 mx-auto mt-2 gap-5 w-100">
   <app-input-area (sourceDataChange)="data = $event" [data]="data" />
-  <app-result-table class="d-flex flex-column gap-3" (itemsChange)="data = $event" [data]="data" />
+  <app-result class="d-flex flex-column gap-3" (dataChange)="data = $event" [data]="data" />
 </div>
