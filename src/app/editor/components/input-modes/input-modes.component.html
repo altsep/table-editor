@@ -1,0 +1,7 @@
+<ul class="nav nav-tabs">
+  <li *ngFor="let format of formats" class="nav-item">
+    <a class="nav-link" [ngClass]="{ active: currentFormat === format }" (click)="onClick(format)" href="#">
+      {{ format | uppercase }}
+    </a>
+  </li>
+</ul>

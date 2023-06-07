@@ -1,13 +1,15 @@
 <form class="d-flex flex-column gap-3" action="" (submit)="onSubmit()">
   <h4>Input</h4>
 
+  <app-input-modes [currentFormat]="currentFormat" />
+
   <textarea
     class="form-control"
     id="textarea"
     name="textarea"
     rows="3"
+    [placeholder]="'Please input ' + (currentFormat | uppercase) + ' data and press Continue'"
     [(ngModel)]="data"
-    placeholder="Please input JSON data and press Continue"
   ></textarea>
 
   <button [disabled]="!data" type="submit" class="btn btn-primary align-self-end">Continue</button>
