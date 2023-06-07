@@ -16,4 +16,9 @@ export class DataService {
   public currentMode$ = new BehaviorSubject<DataFormat>(
     <DataFormat | null>localStorage.getItem(this.storageKey) || this.modes[0]
   );
+
+  public setMode(mode: DataFormat): void {
+    localStorage.setItem(this.storageKey, mode);
+    this.currentMode$.next(mode);
+  }
 }

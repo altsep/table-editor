@@ -15,6 +15,6 @@ export class InputModesComponent {
   constructor(private dataFormatService: DataService) {}
 
   public onClick(value: DataFormat): void {
-    this.dataFormatService.currentMode$.next(value);
+    this.dataFormatService.setMode(value);
   }
 }
