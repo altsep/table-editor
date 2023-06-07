@@ -2,7 +2,7 @@
 
 <ng-container *ngIf="data | items as parsedData; else noData">
   <ng-container *ngIf="parsedData.length; else noItems">
-    <app-result-table [items]="parsedData" (itemsChange)="data = $event" />
+    <app-result-table [items]="parsedData" (itemsChange)="items = $event" />
   </ng-container>
 </ng-container>
 

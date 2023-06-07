@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { DataFormat } from '../../models/dataFormat.model';
+import { DataType } from '../../models/dataFormat.model';
 
 @Component({
   selector: 'app-input-area',
@@ -10,5 +10,5 @@ import { DataFormat } from '../../models/dataFormat.model';
 export class InputAreaComponent {
   @Input() public control!: FormControl<string | null>;
 
-  @Input() public currentMode!: DataFormat;
+  @Input() public dataType!: DataType;
 }

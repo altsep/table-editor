@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { TableData } from '../../models/table.model';
+import { TableItems } from '../../models/table.model';
 import { UtilService } from '../../services/util.service';
 
 interface Col {
@@ -15,9 +15,9 @@ interface Col {
 export class ResultTableComponent implements OnChanges {
   public cols: Col[] = [];
 
-  @Input() public items: TableData = [];
+  @Input() public items: TableItems = [];
 
-  @Output() public itemsChange = new EventEmitter<string>();
+  @Output() public itemsChange = new EventEmitter<TableItems>();
 
   constructor(public utilService: UtilService) {}
 
@@ -25,14 +25,9 @@ export class ResultTableComponent implements OnChanges {
     const { items: itemsChange } = changes;
 
     if (itemsChange.currentValue != null) {
-      const currentValue = itemsChange.currentValue as TableData;
+      const currentValue = itemsChange.currentValue as TableItems;
       this.setCols(currentValue);
     }
-  }
-
-  public emitData(): void {
-    const mutatedData = JSON.stringify(this.items);
-    this.itemsChange.emit(mutatedData);
   }
 
   public sort({ name, sortType }: Col, i: number): void {
@@ -47,7 +42,7 @@ export class ResultTableComponent implements OnChanges {
     }
   }
 
-  private setCols(items: TableData): void {
+  private setCols(items: TableItems): void {
     this.cols = [...new Set(items.map(Object.keys).flat())].map((name) => ({ name, sortType: undefined }));
   }
 }

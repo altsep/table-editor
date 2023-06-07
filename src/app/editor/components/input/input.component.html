@@ -1,11 +1,11 @@
 <h4>Input</h4>
 
-<app-input-modes [currentMode]="currentMode" />
+<app-input-modes [dataType]="dataType" />
 
-<ng-container *ngIf="form.controls[currentMode] as control">
-  <app-input-area [currentMode]="currentMode" [control]="control" />
+<ng-container *ngIf="form.controls[dataType] as control">
+  <app-input-area [dataType]="dataType" [control]="control" />
 
-  <small *ngIf="control.errors?.[currentMode] as msg" class="text-danger font-monospace">
+  <small *ngIf="control.errors?.[dataType] as msg" class="text-danger font-monospace">
     {{ msg }}
   </small>
 

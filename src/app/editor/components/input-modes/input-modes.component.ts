@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DataFormat } from '../../models/dataFormat.model';
+import { DataType } from '../../models/dataFormat.model';
 import { DataService } from '../../services/data.service';
 
 @Component({
@@ -10,11 +10,11 @@ import { DataService } from '../../services/data.service';
 export class InputModesComponent {
   public modes = this.dataFormatService.modes;
 
-  @Input() public currentMode!: DataFormat;
+  @Input() public dataType!: DataType;
 
   constructor(private dataFormatService: DataService) {}
 
-  public onClick(value: DataFormat): void {
+  public onClick(value: DataType): void {
     this.dataFormatService.setMode(value);
   }
 }

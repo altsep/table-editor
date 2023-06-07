@@ -23,21 +23,21 @@ export class InputComponent {
     csv: this.fb.control(this.defaultValueCsv, [Validators.required, notCsvValidator()]),
   });
 
-  public currentMode = this.dataFormatService.currentMode$.getValue();
+  public dataType = this.dataFormatService.dataType$.getValue();
 
   public get data(): string {
-    return this.form.controls[this.currentMode].value || '';
+    return this.form.controls[this.dataType].value || '';
   }
 
   public set data(value: string | undefined) {
     if (value != null) {
-      this.form.controls[this.currentMode].setValue(value);
+      this.form.controls[this.dataType].setValue(value);
     }
   }
 
   constructor(private fb: FormBuilder, private dataFormatService: DataService, private dataService: DataService) {
-    this.dataFormatService.currentMode$.pipe(takeUntilDestroyed()).subscribe((mode) => {
-      this.currentMode = mode;
+    this.dataFormatService.dataType$.pipe(takeUntilDestroyed()).subscribe((mode) => {
+      this.dataType = mode;
     });
 
     this.dataService.data$.pipe(takeUntilDestroyed()).subscribe((data) => {

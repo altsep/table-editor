@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TableData } from '../models/table.model';
+import { TableItems } from '../models/table.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,19 +9,19 @@ export class UtilService {
     return Array.isArray(value) && value.every((el) => el instanceof Object);
   }
 
-  public static parseJson(value: string): TableData | null {
+  public static parseJson(value: string): TableItems | null {
     try {
       const data = JSON.parse(value) as object;
-      return data as TableData;
+      return data as TableItems;
     } catch (error) {
       return null;
     }
   }
 
-  public static parseCsv(value: string): TableData | null {
+  public static parseCsv(value: string): TableItems | null {
     const lineBreakRegex = /[\r\n]+/;
     const valuesRegex = /(?:"([^"]*(?:""[^"]*)*)")|([^",]+)/g;
-    const items: TableData = [];
+    const items: TableItems = [];
 
     const matrix = value
       .split(lineBreakRegex)

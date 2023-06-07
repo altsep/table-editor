@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TableData } from '../models/table.model';
+import { TableItems } from '../models/table.model';
 import { DataService } from '../services/data.service';
 import { UtilService } from '../services/util.service';
 
@@ -9,9 +9,9 @@ import { UtilService } from '../services/util.service';
 export class ItemsPipe implements PipeTransform {
   constructor(private dataModeService: DataService) {}
 
-  public transform(value?: string): TableData | null {
+  public transform(value?: string | null): TableItems | null {
     if (value != null) {
-      const currentMode = this.dataModeService.currentMode$.getValue();
+      const currentMode = this.dataModeService.dataType$.getValue();
 
       switch (currentMode) {
         case 'json': {
