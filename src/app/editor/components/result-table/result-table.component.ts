@@ -40,6 +40,8 @@ export class ResultTableComponent implements OnChanges {
       this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? 1 : -1));
       this.cols[i].sortType = 'asc';
     }
+
+    this.itemsChange.emit(this.items);
   }
 
   private setCols(items: TableItems): void {
