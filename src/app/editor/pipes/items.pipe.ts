@@ -24,7 +24,13 @@ export class ItemsPipe implements PipeTransform {
           break;
         }
         case 'csv': {
-          return [];
+          const parsedValue = UtilService.parseCsv(value || '');
+
+          if (parsedValue != null) {
+            return parsedValue;
+          }
+
+          break;
         }
         default:
           return null;

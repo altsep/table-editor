@@ -10,6 +10,7 @@ import { ResultComponent } from './components/result/result.component';
 import { EditorRoutingModule } from './editor-routing.module';
 import { EditorPageComponent } from './pages/editor-page/editor-page.component';
 import { ItemsPipe } from './pipes/items.pipe';
+import { CsvPipe } from './pipes/csv.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ItemsPipe } from './pipes/items.pipe';
     InputComponent,
     InputModesComponent,
     ItemsPipe,
+    CsvPipe,
   ],
   imports: [CommonModule, EditorRoutingModule, ReactiveFormsModule],
 })

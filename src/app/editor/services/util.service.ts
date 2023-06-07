@@ -17,4 +17,36 @@ export class UtilService {
       return null;
     }
   }
+
+  public static parseCsv(value: string): TableData | null {
+    const lineBreakRegex = /[\r\n]+/;
+    const valuesRegex = /(?:"([^"]*(?:""[^"]*)*)")|([^",]+)/g;
+    const items: TableData = [];
+
+    const matrix = value
+      .split(lineBreakRegex)
+      .filter(Boolean)
+      .map((line) => {
+        const match = line.match(valuesRegex) || [];
+        return match;
+      });
+
+    const csvCols = matrix.splice(0, 1)[0];
+
+    matrix.forEach((row) => {
+      const item: Record<string, string> = {};
+
+      row.forEach((v, j) => {
+        item[csvCols[j]] = v;
+      });
+
+      items.push(item);
+    });
+
+    if (items.length) {
+      return items;
+    }
+
+    return null;
+  }
 }
