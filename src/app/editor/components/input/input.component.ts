@@ -38,7 +38,7 @@ export class InputComponent {
     });
   }
 
-  public onClick(): void {
+  public load(): void {
     this.dataService.data$.next(this.data);
   }
 }
