@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { TableData } from '../../models/table.model';
+import { TableItems } from '../../models/table.model';
 import { UtilService } from '../../services/util.service';
 
 interface Col {
@@ -15,11 +15,9 @@ interface Col {
 export class ResultTableComponent implements OnChanges {
   public cols: Col[] = [];
 
-  @Input() public items: TableData = [];
+  @Input() public items: TableItems = [];
 
-  @Output() public itemsChange = new EventEmitter<TableData>();
-
-  public sortType?: 'asc' | 'desc' = 'asc';
+  @Output() public itemsChange = new EventEmitter<TableItems>();
 
   constructor(public utilService: UtilService) {}
 
@@ -27,22 +25,24 @@ export class ResultTableComponent implements OnChanges {
     const { items: itemsChange } = changes;
 
     if (itemsChange.currentValue != null) {
-      const currentValue = itemsChange.currentValue as TableData;
+      const currentValue = itemsChange.currentValue as TableItems;
       this.setCols(currentValue);
     }
   }
 
   public sort({ name, sortType }: Col, i: number): void {
-    if (sortType === 'desc') {
+    this.cols = this.cols.map((el) => ({ ...el, sortType: undefined }));
+
+    if (sortType === 'asc') {
       this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? -1 : 1));
-      this.cols[i].sortType = 'asc';
+      this.cols[i].sortType = 'desc';
     } else {
       this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? 1 : -1));
-      this.cols[i].sortType = 'desc';
+      this.cols[i].sortType = 'asc';
     }
   }
 
-  private setCols(items: TableData): void {
+  private setCols(items: TableItems): void {
     this.cols = [...new Set(items.map(Object.keys).flat())].map((name) => ({ name, sortType: undefined }));
   }
 }

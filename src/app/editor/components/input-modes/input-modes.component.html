@@ -1,0 +1,7 @@
+<ul class="nav nav-tabs">
+  <li *ngFor="let mode of modes" class="nav-item">
+    <a class="nav-link" [ngClass]="{ active: dataType === mode }" (click)="onClick(mode)" href="#">
+      {{ mode | uppercase }}
+    </a>
+  </li>
+</ul>

@@ -1,12 +1,12 @@
-<table class="table table-striped table-bordered">
-  <thead class="table-light">
+<table class="table table-striped table-bordered" style="table-layout: fixed">
+  <thead>
     <tr>
       <th class="col" *ngFor="let col of cols; index as i" (click)="sort(col, i)">
         <div class="d-flex justify-content-between">
           <span>{{ col.name }}</span>
           <ng-container [ngSwitch]="col.sortType">
-            <i class="bi bi-sort-up" *ngSwitchCase="'desc'"></i>
-            <i class="bi bi-sort-down" *ngSwitchCase="'asc'"></i>
+            <i class="bi bi-sort-up" *ngSwitchCase="'asc'"></i>
+            <i class="bi bi-sort-down" *ngSwitchCase="'desc'"></i>
             <i class="bi bi-app invisible" *ngSwitchDefault></i>
           </ng-container>
         </div>

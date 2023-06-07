@@ -1,43 +1,44 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TableData } from '../../models/table.model';
-import { UtilService } from '../../services/util.service';
+import { Component } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TableItems } from '../../models/table.model';
+import { CsvPipe } from '../../pipes/csv.pipe';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss'],
+  providers: [CsvPipe],
 })
 export class ResultComponent {
-  private _data?: string;
+  public items?: TableItems;
 
-  public get data(): string | undefined {
-    return this._data;
+  public data?: string;
+
+  constructor(private dataService: DataService, private csvPipe: CsvPipe) {
+    dataService.data$.pipe(takeUntilDestroyed()).subscribe((data) => {
+      this.data = data;
+    });
   }
-
-  @Input() public set data(value: string | undefined) {
-    if (value != null && value !== this._data) {
-      this._data = value;
-      this.handleDataChange(value);
-    }
-  }
-
-  @Input() public items: TableData = [];
-
-  @Output() public dataChange = new EventEmitter<string>();
-
-  constructor(private utilService: UtilService) {}
 
   public unload(): void {
-    const mutatedData = JSON.stringify(this.items);
-    this.data = mutatedData;
-    this.dataChange.emit(mutatedData);
-  }
+    let mutatedData: string | null = null;
+    const dataType = this.dataService.dataType$.getValue();
 
-  private handleDataChange(value: string): void {
-    const parsedValue = this.utilService.parseEditorInputValue(value);
+    if (this.items != null) {
+      switch (dataType) {
+        case 'json':
+          mutatedData = JSON.stringify(this.items);
+          break;
+        case 'csv':
+          mutatedData = this.csvPipe.transform(this.items);
+          break;
+        default:
+      }
+    }
 
-    if (parsedValue != null) {
-      this.items = parsedValue;
+    if (mutatedData != null) {
+      this.dataService.data$.next(mutatedData);
     }
   }
 }

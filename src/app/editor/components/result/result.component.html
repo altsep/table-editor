@@ -1,13 +1,23 @@
-<h4>Result</h4>
-
-<ng-container *ngIf="data; else fallback">
-  <app-result-table [items]="items" (itemsChange)="items = $event" />
+<ng-container *ngIf="data | items as parsedData; else noData">
+  <ng-container *ngIf="parsedData.length; else noItems">
+    <app-result-table [items]="parsedData" (itemsChange)="items = $event" />
+  </ng-container>
 </ng-container>
 
-<button type="button" class="btn btn-primary align-self-end mt-auto" [disabled]="!items.length" (click)="unload()">
+<button
+  type="button"
+  class="btn btn-primary align-self-end"
+  [ngClass]="{ invisible: !data }"
+  [disabled]="!data"
+  (click)="unload()"
+>
   Unload
 </button>
 
-<ng-template #fallback>
-  <small class="text-secondary">No data received yet</small>
+<ng-template #noData>
+  <small class="text-secondary font-monospace">No data received yet</small>
+</ng-template>
+
+<ng-template #noItems>
+  <small class="text-secondary font-monospace">{{ 'No items in the collection :(' }}</small>
 </ng-template>
