@@ -14,8 +14,12 @@ import { DataService } from '../../services/data.service';
 export class ResultComponent {
   public items?: TableItems;
 
+  public data?: string;
+
   constructor(private dataService: DataService, itemsPipe: ItemsPipe, private csvPipe: CsvPipe) {
     dataService.data$.pipe(takeUntilDestroyed()).subscribe((data) => {
+      this.data = data;
+
       const items = itemsPipe.transform(data);
 
       if (items != null) {
@@ -26,7 +30,7 @@ export class ResultComponent {
 
   public unload(): void {
     let mutatedData: string | null = null;
-    const dataType = this.dataService.dataType$.getValue();
+    const dataType = this.dataService.getDataType();
 
     if (this.items != null) {
       switch (dataType) {

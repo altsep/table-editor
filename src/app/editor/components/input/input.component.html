@@ -1,5 +1,7 @@
 <app-input-modes [dataType]="dataType" />
 
+<app-input-file (dataChange)="data = $event" />
+
 <ng-container *ngIf="form.controls[dataType] as control">
   <app-input-area [dataType]="dataType" [control]="control" />
 

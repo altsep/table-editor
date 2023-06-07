@@ -1,0 +1,34 @@
+<button
+  type="button"
+  class="btn btn-primary"
+  data-bs-toggle="modal"
+  data-bs-target="#fileSaverModal"
+  [disabled]="disabled"
+>
+  Save as file
+</button>
+
+<div
+  class="modal fade"
+  id="fileSaverModal"
+  tabindex="-1"
+  aria-labelledby="fileSaverModalLabel"
+  aria-hidden="true"
+  #modal
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="fileSaverModalLabel">Confirmation</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to save the data as a {{ dataType | uppercase }} file?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSaveAsFile()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

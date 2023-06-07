@@ -16,7 +16,7 @@ export class InputComponent {
     csv: this.fb.control('', [Validators.required, csvValidator()]),
   });
 
-  public dataType = this.dataFormatService.dataType$.getValue();
+  public dataType = this.dataFormatService.getDataType();
 
   public get data(): string {
     return this.form.controls[this.dataType].value || '';
