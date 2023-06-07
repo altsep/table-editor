@@ -5,10 +5,10 @@
 </ng-container>
 
 <ng-container *ngIf="items">
-  <app-result-file-saver class="align-self-end" [disabled]="!items.length" [data]="data" />
-  <button type="button" class="btn btn-primary align-self-end" [disabled]="!items.length" (click)="unload()">
-    Unload
-  </button>
+  <div class="btn-container d-flex gap-2 align-self-end">
+    <app-result-file-saver [disabled]="!items.length" [data]="data" />
+    <button type="button" class="btn btn-primary" [disabled]="!items.length" (click)="unload()">Unload</button>
+  </div>
 </ng-container>
 
 <ng-template #dataFallback>
