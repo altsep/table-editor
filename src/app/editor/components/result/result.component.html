@@ -1,5 +1,3 @@
-<h4>Result</h4>
-
 <ng-container *ngIf="data | items as parsedData; else noData">
   <ng-container *ngIf="parsedData.length; else noItems">
     <app-result-table [items]="parsedData" (itemsChange)="items = $event" />
