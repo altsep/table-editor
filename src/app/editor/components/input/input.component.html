@@ -1,1 +1,9 @@
-<p>input works!</p>
+<form class="d-flex flex-column gap-3" action="" (submit)="onSubmit()">
+  <h4>Input</h4>
+
+  <app-input-modes [currentFormat]="currentFormat" />
+
+  <app-input-area [data]="data" [currentFormat]="currentFormat" (dataChange)="dataChange.emit($event)" />
+
+  <button [disabled]="!data" type="submit" class="btn btn-primary align-self-end">Continue</button>
+</form>

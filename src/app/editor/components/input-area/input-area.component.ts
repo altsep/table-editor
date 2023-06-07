@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DataFormatService } from '../../services/dataFormat.service';
+import { FormBuilder } from '@angular/forms';
+import { DataFormat } from '../../models/dataFormat.model';
 
 @Component({
   selector: 'app-input-area',
@@ -8,33 +8,32 @@ import { DataFormatService } from '../../services/dataFormat.service';
   styleUrls: ['./input-area.component.scss'],
 })
 export class InputAreaComponent {
-  public currentFormat = this.dataFormatService.currentFormat$.getValue();
+  private defaultValue =
+    '[{"name":"Name 1","year":"2010"},{"name":"Name 2","year":"1997"},{"name":"Name 3","year":"2004"}]';
+
+  public form = this.fb.group({
+    json: this.fb.control(this.defaultValue),
+    csv: this.fb.control(''),
+  });
+
+  @Input() public currentFormat!: DataFormat;
 
   public get data(): string {
-    return this._dataModel[this.currentFormat];
+    return this.form.value[this.currentFormat] || '';
   }
 
   @Input() public set data(value: string | undefined) {
-    if (value != null && value !== this._dataModel[this.currentFormat]) {
-      this._dataModel[this.currentFormat] = value;
+    if (value != null && value !== this.form.get(this.currentFormat)?.value) {
+      this.form.controls[this.currentFormat].setValue(value);
     }
   }
 
   @Output() public dataChange = new EventEmitter<string>();
 
-  private defaultValue =
-    '[{"name":"Name 1","year":"2010"},{"name":"Name 2","year":"1997"},{"name":"Name 3","year":"2004"}]';
-
-  private _dataModel: Record<string, string> = {};
-
-  constructor(private dataFormatService: DataFormatService) {
-    this._dataModel[this.currentFormat] = this.defaultValue;
-    this.dataFormatService.currentFormat$.pipe(takeUntilDestroyed()).subscribe((data) => {
-      this.currentFormat = data;
-    });
-  }
+  constructor(private fb: FormBuilder) {}
 
   public onSubmit(): void {
-    this.dataChange.emit(this._dataModel[this.currentFormat]);
+    const value = this.form.value[this.currentFormat] || '';
+    this.dataChange.emit(value);
   }
 }

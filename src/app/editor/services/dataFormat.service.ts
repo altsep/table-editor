@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { STORAGE_KEY_PREFIX } from '../../constants';
+import { DATA_FORMATS, STORAGE_KEY_PREFIX } from '../../constants';
+import { DataFormat } from '../models/dataFormat.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataFormatService {
-  public readonly formats: readonly string[] = ['json', 'csv'];
+  public readonly formats = DATA_FORMATS;
 
   private storageKey = `${STORAGE_KEY_PREFIX}-format`;
 
-  public currentFormat$ = new BehaviorSubject(localStorage.getItem(this.storageKey) || this.formats[0]);
+  public currentFormat$ = new BehaviorSubject<DataFormat>(
+    <DataFormat | null>localStorage.getItem(this.storageKey) || this.formats[0]
+  );
 }
