@@ -37,16 +37,14 @@ export class UtilService {
       const item: Record<string, string> = {};
 
       row.forEach((v, j) => {
-        item[csvCols[j]] = v;
+        if (j < csvCols.length) {
+          item[csvCols[j]] = v;
+        }
       });
 
       items.push(item);
     });
 
-    if (items.length) {
-      return items;
-    }
-
-    return null;
+    return items;
   }
 }

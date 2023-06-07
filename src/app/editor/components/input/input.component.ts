@@ -15,8 +15,10 @@ export class InputComponent {
     '[{"name":"Name 1","year":"2010"},{"name":"Name 2","year":"1997"},{"name":"Name 3","year":"2004"}]';
 
   private defaultValueCsv = `Year,Make,Model,Length
-1997,Ford,E350,2.35
-2000,Mercury,Cougar,2.38`;
+  1997,Ford,E350,2.35
+  2000,Mercury,Cougar,2.38Year,Make,Model,Length
+  1997,Ford,E350,2.35
+  2000,Mercury,Cougar,2.38`;
 
   public form = this.fb.group({
     json: this.fb.control(this.defaultValueJson, [Validators.required, notJsonValidator()]),

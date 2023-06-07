@@ -10,7 +10,7 @@ export function notCsvValidator(): ValidatorFn {
 
       if (!parsedValue) {
         return {
-          csv: "Couldn't parse value",
+          csv: "Couldn't parse data",
         };
       }
     }

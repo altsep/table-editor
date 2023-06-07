@@ -10,7 +10,7 @@ export function notJsonValidator(): ValidatorFn {
 
       if (!parsedValue) {
         return {
-          json: "Couldn't parse value",
+          json: "Couldn't parse data",
         };
       }
 
