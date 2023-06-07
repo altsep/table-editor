@@ -5,8 +5,8 @@
         <div class="d-flex justify-content-between">
           <span>{{ col.name }}</span>
           <ng-container [ngSwitch]="col.sortType">
-            <i class="bi bi-sort-up" *ngSwitchCase="'desc'"></i>
-            <i class="bi bi-sort-down" *ngSwitchCase="'asc'"></i>
+            <i class="bi bi-sort-up" *ngSwitchCase="'asc'"></i>
+            <i class="bi bi-sort-down" *ngSwitchCase="'desc'"></i>
             <i class="bi bi-app invisible" *ngSwitchDefault></i>
           </ng-container>
         </div>

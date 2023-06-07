@@ -19,8 +19,6 @@ export class ResultTableComponent implements OnChanges {
 
   @Output() public itemsChange = new EventEmitter<TableData>();
 
-  public sortType?: 'asc' | 'desc' = 'asc';
-
   constructor(public utilService: UtilService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -33,12 +31,14 @@ export class ResultTableComponent implements OnChanges {
   }
 
   public sort({ name, sortType }: Col, i: number): void {
-    if (sortType === 'desc') {
+    this.cols = this.cols.map((el) => ({ ...el, sortType: undefined }));
+
+    if (sortType === 'asc') {
       this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? -1 : 1));
-      this.cols[i].sortType = 'asc';
+      this.cols[i].sortType = 'desc';
     } else {
       this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? 1 : -1));
-      this.cols[i].sortType = 'desc';
+      this.cols[i].sortType = 'asc';
     }
   }
 
