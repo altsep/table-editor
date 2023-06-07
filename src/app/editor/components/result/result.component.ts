@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TableData } from '../../models/table.model';
-import { UtilService } from '../../services/util.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-result',
@@ -8,34 +9,19 @@ import { UtilService } from '../../services/util.service';
   styleUrls: ['./result.component.scss'],
 })
 export class ResultComponent {
-  private _data?: string;
+  public items?: TableData;
 
-  public get data(): string | undefined {
-    return this._data;
+  public data?: string;
+
+  constructor(private dataService: DataService) {
+    dataService.data$.pipe(takeUntilDestroyed()).subscribe((data) => {
+      this.data = data;
+    });
   }
-
-  @Input() public set data(value: string | undefined) {
-    if (value != null && value !== this._data) {
-      this._data = value;
-      this.handleDataChange(value);
-    }
-  }
-
-  @Input() public items: TableData = [];
-
-  @Output() public dataChange = new EventEmitter<string>();
 
   public unload(): void {
-    const mutatedData = JSON.stringify(this.items);
-    this.data = mutatedData;
-    this.dataChange.emit(mutatedData);
-  }
-
-  private handleDataChange(value: string): void {
-    const parsedValue = UtilService.parseJson(value);
-
-    if (parsedValue != null) {
-      this.items = parsedValue;
+    if (this.data != null) {
+      this.dataService.data$.next(this.data);
     }
   }
 }

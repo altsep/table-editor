@@ -15,12 +15,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of items; index as i">
-      <td
-        #details
-        *ngFor="let col of cols"
-        contenteditable
-        (blur)="items[i][col.name] = details.innerText; itemsChange.emit(items)"
-      >
+      <td *ngFor="let col of cols" contenteditable #details (blur)="items[i][col.name] = details.innerText; emitData()">
         {{ item[col.name] }}
       </td>
     </tr>

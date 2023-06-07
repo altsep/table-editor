@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators } from '@angular/forms';
 import { notCsvValidator } from '../../directives/not-csv-validator.directive';
 import { notJsonValidator } from '../../directives/not-json-validator.directive';
-import { DataModeService } from '../../services/dataMode.service';
-import { UtilService } from '../../services/util.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-input',
@@ -26,23 +25,23 @@ export class InputComponent {
     return this.form.controls[this.currentMode].value || '';
   }
 
-  @Input() public set data(value: string | undefined) {
-    if (value != null && value !== this.form.get(this.currentMode)?.value) {
+  public set data(value: string | undefined) {
+    if (value != null) {
       this.form.controls[this.currentMode].setValue(value);
     }
   }
 
-  @Output() public dataChange = new EventEmitter<string>();
+  constructor(private fb: FormBuilder, private dataFormatService: DataService, private dataService: DataService) {
+    this.dataFormatService.currentMode$.pipe(takeUntilDestroyed()).subscribe((mode) => {
+      this.currentMode = mode;
+    });
 
-  public error$ = this.utilService.error$;
-
-  constructor(private fb: FormBuilder, private dataFormatService: DataModeService, private utilService: UtilService) {
-    this.dataFormatService.currentMode$.pipe(takeUntilDestroyed()).subscribe((data) => {
-      this.currentMode = data;
+    this.dataService.data$.pipe(takeUntilDestroyed()).subscribe((data) => {
+      this.data = data;
     });
   }
 
   public onClick(): void {
-    this.dataChange.emit(this.data);
+    this.dataService.data$.next(this.data);
   }
 }

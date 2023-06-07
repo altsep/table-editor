@@ -17,7 +17,7 @@ export class ResultTableComponent implements OnChanges {
 
   @Input() public items: TableData = [];
 
-  @Output() public itemsChange = new EventEmitter<TableData>();
+  @Output() public itemsChange = new EventEmitter<string>();
 
   constructor(public utilService: UtilService) {}
 
@@ -28,6 +28,11 @@ export class ResultTableComponent implements OnChanges {
       const currentValue = itemsChange.currentValue as TableData;
       this.setCols(currentValue);
     }
+  }
+
+  public emitData(): void {
+    const mutatedData = JSON.stringify(this.items);
+    this.itemsChange.emit(mutatedData);
   }
 
   public sort({ name, sortType }: Col, i: number): void {

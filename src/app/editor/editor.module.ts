@@ -9,6 +9,7 @@ import { ResultTableComponent } from './components/result-table/result-table.com
 import { ResultComponent } from './components/result/result.component';
 import { EditorRoutingModule } from './editor-routing.module';
 import { EditorPageComponent } from './pages/editor-page/editor-page.component';
+import { ItemsPipe } from './pipes/items.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { EditorPageComponent } from './pages/editor-page/editor-page.component';
     ResultTableComponent,
     InputComponent,
     InputModesComponent,
+    ItemsPipe,
   ],
   imports: [CommonModule, EditorRoutingModule, ReactiveFormsModule],
 })
