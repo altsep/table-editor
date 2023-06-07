@@ -12,6 +12,7 @@ import { EditorPageComponent } from './pages/editor-page/editor-page.component';
 import { ItemsPipe } from './pipes/items.pipe';
 import { CsvPipe } from './pipes/csv.pipe';
 import { InputFileComponent } from './components/input-file/input-file.component';
+import { ResultFileSaverComponent } from './components/result-file-saver/result-file-saver.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { InputFileComponent } from './components/input-file/input-file.component
     ItemsPipe,
     CsvPipe,
     InputFileComponent,
+    ResultFileSaverComponent,
   ],
   imports: [CommonModule, EditorRoutingModule, ReactiveFormsModule],
 })

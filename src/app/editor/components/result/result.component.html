@@ -4,15 +4,12 @@
   </ng-container>
 </ng-container>
 
-<button
-  type="button"
-  class="btn btn-primary align-self-end"
-  [ngClass]="{ invisible: !items }"
-  [disabled]="!items"
-  (click)="unload()"
->
-  Unload
-</button>
+<app-result-file-saver class="align-self-end" />
+<ng-container *ngIf="items">
+  <button type="button" class="btn btn-primary align-self-end" [disabled]="!items.length" (click)="unload()">
+    Unload
+  </button>
+</ng-container>
 
 <ng-template #dataFallback>
   <small class="text-secondary font-monospace">No data received yet</small>
