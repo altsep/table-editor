@@ -14,8 +14,12 @@ import { DataService } from '../../services/data.service';
 export class ResultComponent {
   public items?: TableItems;
 
+  public data?: string;
+
   constructor(private dataService: DataService, itemsPipe: ItemsPipe, private csvPipe: CsvPipe) {
     dataService.data$.pipe(takeUntilDestroyed()).subscribe((data) => {
+      this.data = data;
+
       const items = itemsPipe.transform(data);
 
       if (items != null) {

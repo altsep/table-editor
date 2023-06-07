@@ -8,7 +8,7 @@ describe('ResultFileSaverComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ResultFileSaverComponent]
+      declarations: [ResultFileSaverComponent],
     });
     fixture = TestBed.createComponent(ResultFileSaverComponent);
     component = fixture.componentInstance;

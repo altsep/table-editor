@@ -23,11 +23,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Do you really want to save the table data as file?</p>
+        <p>Do you really want to save the data as file?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onSaveAsFile()">Save</button>
       </div>
     </div>
   </div>

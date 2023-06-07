@@ -4,8 +4,8 @@
   </ng-container>
 </ng-container>
 
-<app-result-file-saver class="align-self-end" />
 <ng-container *ngIf="items">
+  <app-result-file-saver class="align-self-end" [disabled]="!items.length" [data]="data" />
   <button type="button" class="btn btn-primary align-self-end" [disabled]="!items.length" (click)="unload()">
     Unload
   </button>
