@@ -4,12 +4,10 @@
   </ng-container>
 </ng-container>
 
-<ng-container *ngIf="items">
-  <div class="btn-container d-flex gap-2 align-self-end">
-    <app-result-file-saver [disabled]="!items.length" [data]="mutatedData" />
-    <button type="button" class="btn btn-primary" [disabled]="!items.length" (click)="unload()">Unload</button>
-  </div>
-</ng-container>
+<div *ngIf="items" class="btn-container d-flex gap-2 align-self-end">
+  <app-result-file-saver [disabled]="!items.length" [data]="mutatedData" />
+  <button type="button" class="btn btn-primary" [disabled]="!items.length" (click)="unload()">Unload</button>
+</div>
 
 <ng-template #dataFallback>
   <small class="text-secondary font-monospace">No data received yet</small>
