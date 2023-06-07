@@ -25,10 +25,6 @@ export class ResultComponent {
 
   @Output() public dataChange = new EventEmitter<string>();
 
-  public error$ = this.utilService.error$;
-
-  constructor(private utilService: UtilService) {}
-
   public unload(): void {
     const mutatedData = JSON.stringify(this.items);
     this.data = mutatedData;
@@ -36,7 +32,7 @@ export class ResultComponent {
   }
 
   private handleDataChange(value: string): void {
-    const parsedValue = this.utilService.parseEditorInputValue(value);
+    const parsedValue = UtilService.parseJson(value);
 
     if (parsedValue != null) {
       this.items = parsedValue;

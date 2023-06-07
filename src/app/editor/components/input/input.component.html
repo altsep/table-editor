@@ -1,9 +1,15 @@
-<form class="d-flex flex-column gap-3" action="" (submit)="onSubmit()">
-  <h4>Input</h4>
+<h4>Input</h4>
 
-  <app-input-modes [currentFormat]="currentFormat" />
+<app-input-modes [currentMode]="currentMode" />
 
-  <app-input-area [data]="data" [currentFormat]="currentFormat" (dataChange)="dataChange.emit($event)" />
+<ng-container *ngIf="form.controls[currentMode] as control">
+  <app-input-area [currentMode]="currentMode" [control]="control" />
 
-  <button [disabled]="!data" type="submit" class="btn btn-primary align-self-end">Continue</button>
-</form>
+  <small *ngIf="control.errors?.[currentMode] as msg" class="text-danger font-monospace">
+    {{ msg }}
+  </small>
+
+  <button [disabled]="control.invalid" type="button" class="btn btn-primary align-self-end" (click)="onClick()">
+    Continue
+  </button>
+</ng-container>

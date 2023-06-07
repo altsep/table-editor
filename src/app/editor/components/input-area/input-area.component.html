@@ -1,10 +1,8 @@
-<form action="" [formGroup]="form">
-  <textarea
-    class="form-control"
-    id="textarea"
-    name="textarea"
-    rows="3"
-    [placeholder]="'Please input ' + currentFormat + ' data and press Continue'"
-    [formControl]="form.controls[currentFormat]"
-  ></textarea>
-</form>
+<textarea
+  class="form-control"
+  id="textarea"
+  name="textarea"
+  rows="3"
+  [placeholder]="'Please input ' + (currentMode | uppercase) + ' data and press Continue'"
+  [formControl]="control"
+></textarea>

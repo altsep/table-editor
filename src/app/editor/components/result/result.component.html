@@ -1,9 +1,5 @@
 <h4>Result</h4>
 
-<ng-container *ngIf="error$ | async">
-  <small class="text-danger font-monospace">Error occured</small>
-</ng-container>
-
 <ng-container *ngIf="data && items.length; else fallback">
   <app-result-table [items]="items" (itemsChange)="items = $event" />
 </ng-container>

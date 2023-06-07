@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs">
-  <li *ngFor="let format of formats" class="nav-item">
-    <a class="nav-link" [ngClass]="{ active: currentFormat === format }" (click)="onClick(format)" href="#">
-      {{ format | uppercase }}
+  <li *ngFor="let mode of modes" class="nav-item">
+    <a class="nav-link" [ngClass]="{ active: currentMode === mode }" (click)="onClick(mode)" href="#">
+      {{ mode | uppercase }}
     </a>
   </li>
 </ul>
