@@ -25,6 +25,8 @@ export class ResultComponent {
 
   @Output() public dataChange = new EventEmitter<string>();
 
+  public error$ = this.utilService.error$;
+
   constructor(private utilService: UtilService) {}
 
   public unload(): void {
