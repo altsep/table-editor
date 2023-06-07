@@ -11,7 +11,7 @@ export class ItemsPipe implements PipeTransform {
 
   public transform(value?: string | null): TableItems | null {
     if (value != null) {
-      const currentMode = this.dataModeService.dataType$.getValue();
+      const currentMode = this.dataModeService.getDataType();
 
       switch (currentMode) {
         case 'json': {

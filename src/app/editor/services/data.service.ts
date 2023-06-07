@@ -21,4 +21,8 @@ export class DataService {
     localStorage.setItem(this.storageKey, mode);
     this.dataType$.next(mode);
   }
+
+  public getDataType(): DataType {
+    return this.dataType$.getValue();
+  }
 }

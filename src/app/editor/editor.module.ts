@@ -11,6 +11,7 @@ import { EditorRoutingModule } from './editor-routing.module';
 import { EditorPageComponent } from './pages/editor-page/editor-page.component';
 import { ItemsPipe } from './pipes/items.pipe';
 import { CsvPipe } from './pipes/csv.pipe';
+import { InputFileComponent } from './components/input-file/input-file.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CsvPipe } from './pipes/csv.pipe';
     InputModesComponent,
     ItemsPipe,
     CsvPipe,
+    InputFileComponent,
   ],
   imports: [CommonModule, EditorRoutingModule, ReactiveFormsModule],
 })

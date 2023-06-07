@@ -26,7 +26,7 @@ export class ResultComponent {
 
   public unload(): void {
     let mutatedData: string | null = null;
-    const dataType = this.dataService.dataType$.getValue();
+    const dataType = this.dataService.getDataType();
 
     if (this.items != null) {
       switch (dataType) {
