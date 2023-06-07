@@ -45,6 +45,10 @@ export class UtilService {
       items.push(item);
     });
 
-    return items;
+    if (items.length) {
+      return items;
+    }
+
+    return null;
   }
 }
