@@ -1,12 +1,12 @@
 <ng-container *ngIf="items; else dataFallback">
   <ng-container *ngIf="items.length; else itemsLengthFallback">
-    <app-result-table [items]="items" (itemsChange)="items = $event" />
+    <app-result-table [items]="items" (itemsChange)="items = $event; setMutatedData()" />
   </ng-container>
 </ng-container>
 
 <ng-container *ngIf="items">
   <div class="btn-container d-flex gap-2 align-self-end">
-    <app-result-file-saver [disabled]="!items.length" [data]="data" />
+    <app-result-file-saver [disabled]="!items.length" [data]="mutatedData" />
     <button type="button" class="btn btn-primary" [disabled]="!items.length" (click)="unload()">Unload</button>
   </div>
 </ng-container>

@@ -13,7 +13,7 @@ export class ResultFileSaverComponent {
 
   @Input() public data?: string;
 
-  public dataType = this.dataService.getDataType();
+  public dataType!: string;
 
   constructor(private fileSaverService: FileSaverService, private dataService: DataService) {
     this.dataService.dataType$.pipe(takeUntilDestroyed()).subscribe((data) => {
