@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators } from '@angular/forms';
-import { notCsvValidator } from '../../directives/not-csv-validator.directive';
-import { notJsonValidator } from '../../directives/not-json-validator.directive';
+import { csvValidator } from '../../directives/csv-validator.directive';
+import { jsonValidator } from '../../directives/json-validator.directive';
 import { DataService } from '../../services/data.service';
 
 @Component({
@@ -12,8 +12,8 @@ import { DataService } from '../../services/data.service';
 })
 export class InputComponent {
   public form = this.fb.group({
-    json: this.fb.control('', [Validators.required, notJsonValidator()]),
-    csv: this.fb.control('', [Validators.required, notCsvValidator()]),
+    json: this.fb.control('', [Validators.required, jsonValidator()]),
+    csv: this.fb.control('', [Validators.required, csvValidator()]),
   });
 
   public dataType = this.dataFormatService.dataType$.getValue();
