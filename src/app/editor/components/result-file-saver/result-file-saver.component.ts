@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FileSaverService } from 'ngx-filesaver';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-result-file-saver',
@@ -13,13 +13,11 @@ export class ResultFileSaverComponent {
 
   @Input() public dataType?: string;
 
-  constructor(private fileSaverService: FileSaverService) {}
-
   public onSaveAsFile(): void {
     if (this.data != null && this.dataType != null) {
       const mimeType = this.determineMimeType();
       const blob = new Blob([this.data], { type: `${mimeType};charset=utf-8` });
-      this.fileSaverService.save(blob, `Untitled.${this.dataType}`);
+      FileSaver.saveAs(blob, `Untitled.${this.dataType}`);
     }
   }
 
