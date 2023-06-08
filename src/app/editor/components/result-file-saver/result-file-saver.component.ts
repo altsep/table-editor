@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import * as FileSaver from 'file-saver';
+import * as FileSaver from 'file-saver-es';
 
 @Component({
   selector: 'app-result-file-saver',
