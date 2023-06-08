@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { isPlainObject } from 'lodash-es';
 import { TableItems } from '../models/table.type';
 
 @Injectable({
@@ -6,7 +7,7 @@ import { TableItems } from '../models/table.type';
 })
 export class UtilService {
   public static isArrayOfObjects(value: unknown): boolean {
-    return Array.isArray(value) && value.every((el) => el instanceof Object);
+    return Array.isArray(value) && value.every(isPlainObject);
   }
 
   public static parseJson(value: string): TableItems | null {

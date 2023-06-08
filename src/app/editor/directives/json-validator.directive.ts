@@ -18,7 +18,7 @@ export function jsonValidator(): ValidatorFn {
 
       if (!isArrayOfObjects) {
         return {
-          json: 'Value must be an array of objects',
+          json: 'Value must be an array of plain objects',
         };
       }
     }
