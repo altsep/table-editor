@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DataType } from '../../models/dataFormat.model';
+import { DataType } from '../../models/dataFormat.type';
 import { DataService } from '../../services/data.service';
 
 @Component({

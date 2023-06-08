@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TableItems } from '../models/table.model';
+import { TableItems } from '../models/table.type';
 
 @Injectable({
   providedIn: 'root',

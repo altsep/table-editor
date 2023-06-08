@@ -2,7 +2,7 @@ import { Component, effect, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { isEqual } from 'lodash-es';
 import { map } from 'rxjs';
-import { TableItems } from '../../models/table.model';
+import { TableItems } from '../../models/table.type';
 import { CsvPipe } from '../../pipes/csv.pipe';
 import { ItemsPipe } from '../../pipes/items.pipe';
 import { DataService } from '../../services/data.service';

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { isObjectLike } from 'lodash-es';
-import { TableItems } from '../../models/table.model';
+import { TableItems } from '../../models/table.type';
 import { UtilService } from '../../services/util.service';
 
 interface Col {
