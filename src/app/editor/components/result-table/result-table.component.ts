@@ -39,10 +39,10 @@ export class ResultTableComponent {
     this.cols = this.cols.map((el) => ({ ...el, sortType: undefined }));
 
     if (sortType === 'asc') {
-      this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? -1 : 1));
+      this.items = this.items.slice().sort((a, b) => (String(a[name]) > String(b[name]) ? -1 : 1));
       this.cols[i].sortType = 'desc';
     } else {
-      this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? 1 : -1));
+      this.items = this.items.slice().sort((a, b) => (String(a[name]) > String(b[name]) ? 1 : -1));
       this.cols[i].sortType = 'asc';
     }
 
