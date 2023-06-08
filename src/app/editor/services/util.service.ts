@@ -11,7 +11,9 @@ export class UtilService {
 
   public static parseJson(value: string): TableItems | null {
     try {
-      return JSON.parse(value) as TableItems;
+      const lineBreakRegex = /[\r\n]+/g;
+      const noBreaksValue = value.replace(lineBreakRegex, '');
+      return JSON.parse(noBreaksValue) as TableItems;
     } catch (error) {
       return null;
     }
