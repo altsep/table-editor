@@ -21,7 +21,9 @@ export class ResultComponent {
   public mutatedData?: string;
 
   constructor(private dataService: DataService, itemsPipe: ItemsPipe, private csvPipe: CsvPipe) {
-    effect(() => this.setMutatedData());
+    effect(() => {
+      this.setMutatedData();
+    });
 
     dataService.data$
       .pipe(
@@ -29,10 +31,6 @@ export class ResultComponent {
         map((value) => itemsPipe.transform(value, this.dataType()) || [])
       )
       .subscribe((items) => this.items.set(items));
-  }
-
-  public onItemsChange(e: TableItems): void {
-    this.items.mutate(() => e);
   }
 
   public unload(): void {

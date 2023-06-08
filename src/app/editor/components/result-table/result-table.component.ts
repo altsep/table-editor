@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { isObjectLike } from 'lodash-es';
+import { isEqual, isObjectLike } from 'lodash-es';
 import { TableItems } from '../../models/table.type';
 import { UtilService } from '../../services/util.service';
 
@@ -36,13 +36,11 @@ export class ResultTableComponent {
   public isObjectLike = isObjectLike;
 
   public sort({ name, sortType }: Col, i: number): void {
-    this.cols = this.cols.map((el) => ({ ...el, sortType: undefined }));
-
     if (sortType === 'asc') {
-      this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? -1 : 1));
+      this.items = this.items.slice().sort((a, b) => (String(a[name]) > String(b[name]) ? -1 : 1));
       this.cols[i].sortType = 'desc';
     } else {
-      this.items = this.items.sort((a, b) => (String(a[name]) > String(b[name]) ? 1 : -1));
+      this.items = this.items.slice().sort((a, b) => (String(a[name]) > String(b[name]) ? 1 : -1));
       this.cols[i].sortType = 'asc';
     }
 
@@ -50,6 +48,11 @@ export class ResultTableComponent {
   }
 
   private setCols(items: TableItems): void {
-    this.cols = [...new Set(items.map(Object.keys).flat())].map((name) => ({ name, sortType: undefined }));
+    const cols = [...new Set(items.map(Object.keys).flat())];
+    const prevCols = this.cols.map(({ name }) => name);
+
+    if (!isEqual(prevCols, cols)) {
+      this.cols = cols.map((name) => ({ name, sortType: undefined }));
+    }
   }
 }

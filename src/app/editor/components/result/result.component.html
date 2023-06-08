@@ -1,5 +1,5 @@
 <ng-container *ngIf="items() as itemsArr; else itemsLengthFallback">
-  <app-result-table [items]="itemsArr" (itemsChange)="onItemsChange($event)" />
+  <app-result-table [items]="itemsArr" (itemsChange)="this.items.set($event)" />
 
   <div *ngIf="itemsArr.length; else itemsLengthFallback" class="btn-container d-flex gap-2 align-self-end">
     <app-result-file-saver [disabled]="!itemsArr.length" [data]="mutatedData" [dataType]="dataType()" />
