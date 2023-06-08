@@ -1,7 +1,7 @@
 import { Component, effect, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
 import { isEqual } from 'lodash-es';
+import { map } from 'rxjs';
 import { TableItems } from '../../models/table.model';
 import { CsvPipe } from '../../pipes/csv.pipe';
 import { ItemsPipe } from '../../pipes/items.pipe';

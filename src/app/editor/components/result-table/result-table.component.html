@@ -21,7 +21,9 @@
         #details
         (blur)="items[i][col.name] = details.innerText; itemsChange.emit(items)"
       >
-        {{ item[col.name] }}
+        <ng-container *ngIf="item[col.name] as item">
+          {{ isObjectLike(item) ? (item | json) : item }}
+        </ng-container>
       </td>
     </tr>
   </tbody>

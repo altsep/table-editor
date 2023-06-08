@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { isObjectLike } from 'lodash-es';
 import { TableItems } from '../../models/table.model';
 import { UtilService } from '../../services/util.service';
 
@@ -31,6 +32,8 @@ export class ResultTableComponent {
   @Output() public itemsChange = new EventEmitter<TableItems>();
 
   constructor(public utilService: UtilService) {}
+
+  public isObjectLike = isObjectLike;
 
   public sort({ name, sortType }: Col, i: number): void {
     this.cols = this.cols.map((el) => ({ ...el, sortType: undefined }));

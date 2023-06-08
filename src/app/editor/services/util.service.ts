@@ -11,8 +11,7 @@ export class UtilService {
 
   public static parseJson(value: string): TableItems | null {
     try {
-      const data = JSON.parse(value) as object;
-      return data as TableItems;
+      return JSON.parse(value) as TableItems;
     } catch (error) {
       return null;
     }
@@ -20,16 +19,13 @@ export class UtilService {
 
   public static parseCsv(value: string): TableItems | null {
     const lineBreakRegex = /[\r\n]+/;
-    const valuesRegex = /(?:"([^"]*(?:""[^"]*)*)")|([^",]+)/g;
+    const valuesRegex = /(?!\B{[^}]*|"),(?![^{]*}\B|")/g;
     const items: TableItems = [];
 
     const matrix = value
       .split(lineBreakRegex)
       .filter(Boolean)
-      .map((line) => {
-        const match = line.match(valuesRegex) || [];
-        return match;
-      });
+      .map((line) => line.split(valuesRegex));
 
     const csvCols = matrix.splice(0, 1)[0];
 
