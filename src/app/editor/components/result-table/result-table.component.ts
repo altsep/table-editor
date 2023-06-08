@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableItems } from '../../models/table.model';
 import { UtilService } from '../../services/util.service';
 
@@ -12,23 +12,25 @@ interface Col {
   templateUrl: './result-table.component.html',
   styleUrls: ['./result-table.component.scss'],
 })
-export class ResultTableComponent implements OnChanges {
+export class ResultTableComponent {
   public cols: Col[] = [];
 
-  @Input() public items: TableItems = [];
+  private _items: TableItems = [];
+
+  public get items(): TableItems {
+    return this._items;
+  }
+
+  @Input() public set items(value: TableItems) {
+    if (value != null) {
+      this._items = value;
+      this.setCols(value);
+    }
+  }
 
   @Output() public itemsChange = new EventEmitter<TableItems>();
 
   constructor(public utilService: UtilService) {}
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    const { items: itemsChange } = changes;
-
-    if (itemsChange.currentValue != null) {
-      const currentValue = itemsChange.currentValue as TableItems;
-      this.setCols(currentValue);
-    }
-  }
 
   public sort({ name, sortType }: Col, i: number): void {
     this.cols = this.cols.map((el) => ({ ...el, sortType: undefined }));
