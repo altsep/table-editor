@@ -1,18 +1,12 @@
-<ng-container *ngIf="items; else dataFallback">
-  <ng-container *ngIf="items.length; else itemsLengthFallback">
-    <app-result-table [items]="items" (itemsChange)="items = $event; setMutatedData()" />
-  </ng-container>
+<ng-container *ngIf="items() as itemsArr; else itemsLengthFallback">
+  <app-result-table [items]="itemsArr" (itemsChange)="onItemsChange($event)" />
+
+  <div *ngIf="itemsArr.length; else itemsLengthFallback" class="btn-container d-flex gap-2 align-self-end">
+    <app-result-file-saver [disabled]="!itemsArr.length" [data]="mutatedData" [dataType]="dataType()" />
+    <button type="button" class="btn btn-primary" [disabled]="!itemsArr.length" (click)="unload()">Unload</button>
+  </div>
 </ng-container>
 
-<div *ngIf="items" class="btn-container d-flex gap-2 align-self-end">
-  <app-result-file-saver [disabled]="!items.length" [data]="mutatedData" />
-  <button type="button" class="btn btn-primary" [disabled]="!items.length" (click)="unload()">Unload</button>
-</div>
-
-<ng-template #dataFallback>
-  <small class="text-secondary font-monospace">No data received yet</small>
-</ng-template>
-
 <ng-template #itemsLengthFallback>
-  <small class="text-secondary font-monospace">{{ 'No items in the collection :(' }}</small>
+  <small class="text-secondary font-monospace">{{ 'The collection is empty' }}</small>
 </ng-template>

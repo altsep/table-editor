@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FileSaverService } from 'ngx-filesaver';
-import { DataService } from '../../services/data.service';
+import * as FileSaver from 'file-saver-es';
 
 @Component({
   selector: 'app-result-file-saver',
@@ -13,12 +11,14 @@ export class ResultFileSaverComponent {
 
   @Input() public data?: string;
 
-  public dataType!: string;
+  @Input() public dataType?: string;
 
-  constructor(private fileSaverService: FileSaverService, private dataService: DataService) {
-    this.dataService.dataType$.pipe(takeUntilDestroyed()).subscribe((data) => {
-      this.dataType = data;
-    });
+  public onSaveAsFile(): void {
+    if (this.data != null && this.dataType != null) {
+      const mimeType = this.determineMimeType();
+      const blob = new Blob([this.data], { type: `${mimeType};charset=utf-8` });
+      FileSaver.saveAs(blob, `Untitled.${this.dataType}`);
+    }
   }
 
   private determineMimeType(): string {
@@ -31,13 +31,5 @@ export class ResultFileSaverComponent {
     }
 
     return 'text/plain';
-  }
-
-  public onSaveAsFile(): void {
-    if (this.data != null) {
-      const mimeType = this.determineMimeType();
-      const blob = new Blob([this.data], { type: `${mimeType};charset=utf-8` });
-      this.fileSaverService.save(blob, `Untitled.${this.dataType}`);
-    }
   }
 }

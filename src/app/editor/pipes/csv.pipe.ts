@@ -6,7 +6,7 @@ import { TableItems } from '../models/table.model';
 })
 export class CsvPipe implements PipeTransform {
   // eslint-disable-next-line class-methods-use-this
-  public transform(value?: TableItems | null): string | null {
+  public transform(value?: TableItems | null): string | undefined {
     if (value != null) {
       const cols = [[...new Set(value.map(Object.keys).flat())].join(',')];
 
@@ -17,6 +17,6 @@ export class CsvPipe implements PipeTransform {
       return csv;
     }
 
-    return null;
+    return undefined;
   }
 }
