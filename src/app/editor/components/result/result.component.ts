@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { skip } from 'rxjs';
+import { Component, effect, signal } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { isEqual } from 'lodash-es';
 import { TableItems } from '../../models/table.model';
 import { CsvPipe } from '../../pipes/csv.pipe';
 import { ItemsPipe } from '../../pipes/items.pipe';
@@ -13,21 +14,25 @@ import { DataService } from '../../services/data.service';
   providers: [ItemsPipe, CsvPipe],
 })
 export class ResultComponent {
-  public items?: TableItems;
+  public items = signal<TableItems>([], { equal: isEqual });
+
+  public dataType = toSignal(this.dataService.dataType$);
 
   public mutatedData?: string;
 
   constructor(private dataService: DataService, itemsPipe: ItemsPipe, private csvPipe: CsvPipe) {
-    dataService.dataType$.pipe(takeUntilDestroyed(), skip(1)).subscribe(() => this.setMutatedData());
+    effect(() => this.setMutatedData());
 
-    dataService.data$.pipe(takeUntilDestroyed()).subscribe((data) => {
-      const items = itemsPipe.transform(data);
+    dataService.data$
+      .pipe(
+        takeUntilDestroyed(),
+        map((value) => itemsPipe.transform(value, this.dataType()) || [])
+      )
+      .subscribe((items) => this.items.set(items));
+  }
 
-      if (items != null) {
-        this.items = items;
-        this.setMutatedData();
-      }
-    });
+  public onItemsChange(e: TableItems): void {
+    this.items.mutate(() => e);
   }
 
   public unload(): void {
@@ -37,15 +42,16 @@ export class ResultComponent {
   }
 
   public setMutatedData(): void {
-    const dataType = this.dataService.getDataType();
+    const dataType = this.dataType();
+    const items = this.items();
 
-    if (this.items != null) {
+    if (items != null) {
       switch (dataType) {
         case 'json':
-          this.mutatedData = JSON.stringify(this.items);
+          this.mutatedData = JSON.stringify(items);
           break;
         case 'csv':
-          this.mutatedData = this.csvPipe.transform(this.items) || undefined;
+          this.mutatedData = this.csvPipe.transform(items);
           break;
         default:
       }
