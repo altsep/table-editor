@@ -16,7 +16,7 @@ export class InputComponent {
     csv: this.fb.control('', [Validators.required, csvValidator()]),
   });
 
-  public dataType = this.dataFormatService.getDataType();
+  public dataType = this.dataService.getDataType();
 
   public get data(): string {
     return this.form.controls[this.dataType].value || '';
@@ -28,8 +28,8 @@ export class InputComponent {
     }
   }
 
-  constructor(private fb: FormBuilder, private dataFormatService: DataService, private dataService: DataService) {
-    this.dataFormatService.dataType$.pipe(takeUntilDestroyed()).subscribe((mode) => {
+  constructor(private fb: FormBuilder, private dataService: DataService) {
+    this.dataService.dataType$.pipe(takeUntilDestroyed()).subscribe((mode) => {
       this.dataType = mode;
     });
 
