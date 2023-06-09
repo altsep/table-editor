@@ -1,5 +1,5 @@
-import { Component, effect, signal } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { Component } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { Util } from '../../../util';
 import { DataService } from '../../services/data.service';
@@ -11,45 +11,24 @@ import { TableItem } from '../../types/table.type';
   styleUrls: ['./result.component.scss'],
 })
 export class ResultComponent {
-  public items = signal<TableItem[]>([]);
+  public items: TableItem[] = [];
 
-  public dataType = toSignal(this.dataService.dataType$);
+  public dataType$ = this.dataService.dataType$;
 
-  public mutatedData?: string;
-
-  constructor(private dataService: DataService) {
-    effect(() => {
-      this.setMutatedData();
-    });
-
-    dataService.data$
+  constructor(public dataService: DataService) {
+    dataService.inputData$
       .pipe(
         takeUntilDestroyed(),
-        map((value) => Util.toItems(value, this.dataType()) || [])
+        map((value) => Util.toItems(value, dataService.getDataType()))
       )
-      .subscribe((items) => this.items.set(items));
+      .subscribe((items) => {
+        this.items = items;
+      });
   }
 
   public unload(): void {
-    if (this.mutatedData != null) {
-      this.dataService.data$.next(this.mutatedData);
-    }
-  }
-
-  public setMutatedData(): void {
-    const dataType = this.dataType();
-    const items = this.items();
-
-    if (items != null) {
-      switch (dataType) {
-        case 'json':
-          this.mutatedData = JSON.stringify(items);
-          break;
-        case 'csv':
-          this.mutatedData = Util.toCsv(items);
-          break;
-        default:
-      }
-    }
+    const dataType = this.dataService.getDataType();
+    const mutatedData = Util.toData(this.items, dataType);
+    this.dataService.outputData$.next(mutatedData);
   }
 }

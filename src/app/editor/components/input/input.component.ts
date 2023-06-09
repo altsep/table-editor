@@ -24,7 +24,8 @@ export class InputComponent {
 
   public set data(value: string | undefined) {
     if (value != null) {
-      this.form.controls[this.dataType].setValue(value);
+      const control = this.form.controls[this.dataType];
+      control.setValue(value);
     }
   }
 
@@ -33,12 +34,12 @@ export class InputComponent {
       this.dataType = mode;
     });
 
-    this.dataService.data$.pipe(takeUntilDestroyed()).subscribe((data) => {
+    this.dataService.outputData$.pipe(takeUntilDestroyed()).subscribe((data) => {
       this.data = data;
     });
   }
 
   public load(): void {
-    this.dataService.data$.next(this.data);
+    this.dataService.inputData$.next(this.data);
   }
 }

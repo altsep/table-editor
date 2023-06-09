@@ -35,7 +35,7 @@ export class Util {
     return [...new Set(value.map(Object.keys).flat())];
   }
 
-  public static toCsv(value?: TableItem[] | null): string | undefined {
+  public static toCsv(value?: TableItem[] | null): string {
     if (value != null) {
       const stringified = csv.stringify(value, {
         header: true,
@@ -43,10 +43,10 @@ export class Util {
       return stringified;
     }
 
-    return undefined;
+    return '';
   }
 
-  public static toItems(value = '', dataType: DataType = 'json'): TableItem[] | undefined {
+  public static toItems(value = '', dataType: DataType = 'json'): TableItem[] {
     const fns = {
       json: Util.parseJson,
       csv: Util.parseCsv,
@@ -58,6 +58,24 @@ export class Util {
       return parsedValue;
     }
 
-    return undefined;
+    return [];
+  }
+
+  public static toData(items: TableItem[], dataType: DataType = 'json'): string {
+    let data = '';
+
+    if (items != null) {
+      switch (dataType) {
+        case 'json':
+          data = JSON.stringify(items);
+          break;
+        case 'csv':
+          data = Util.toCsv(items);
+          break;
+        default:
+      }
+    }
+
+    return data;
   }
 }

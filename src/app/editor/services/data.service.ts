@@ -11,7 +11,9 @@ export class DataService {
 
   private readonly storageKey = `${STORAGE_KEY_PREFIX}-mode`;
 
-  public data$ = new Subject<string>();
+  public inputData$ = new Subject<string>();
+
+  public outputData$ = new Subject<string>();
 
   public dataType$ = new BehaviorSubject<DataType>(
     <DataType | null>localStorage.getItem(this.storageKey) || this.modes[0]
