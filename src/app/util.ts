@@ -1,5 +1,5 @@
 import * as csv from 'csv/browser/esm/sync';
-import { isObject, isPlainObject } from 'lodash-es';
+import { isPlainObject } from 'lodash-es';
 import { DataType } from './editor/types/dataFormat.type';
 import { TableItem } from './editor/types/table.type';
 
@@ -37,46 +37,25 @@ export class Util {
 
   public static toCsv(value?: TableItem[] | null): string | undefined {
     if (value != null) {
-      const cols = [Util.getCols(value).join(',')];
-
-      const rows = value.map((item) =>
-        Object.values(item)
-          .map((v) => (isObject(v) ? JSON.stringify(v) : v))
-          .join(',')
-      );
-
-      const csvString = cols.concat(rows).join('\n');
-
-      return csvString;
+      const stringified = csv.stringify(value, {
+        header: true,
+      });
+      return stringified;
     }
 
     return undefined;
   }
 
-  public static toItems(value: string | undefined, dataType: DataType = 'json'): TableItem[] | undefined {
-    if (value != null) {
-      switch (dataType) {
-        case 'json': {
-          const parsedValue = Util.parseJson(value);
+  public static toItems(value = '', dataType: DataType = 'json'): TableItem[] | undefined {
+    const fns = {
+      json: Util.parseJson,
+      csv: Util.parseCsv,
+    };
+    const fn = fns[dataType];
+    const parsedValue = fn(value);
 
-          if (parsedValue != null) {
-            return parsedValue;
-          }
-
-          break;
-        }
-        case 'csv': {
-          const parsedValue = Util.parseCsv(value);
-
-          if (parsedValue != null) {
-            return parsedValue;
-          }
-
-          break;
-        }
-        default:
-          return undefined;
-      }
+    if (parsedValue != null) {
+      return parsedValue;
     }
 
     return undefined;
