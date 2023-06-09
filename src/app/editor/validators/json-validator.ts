@@ -14,9 +14,9 @@ export function jsonValidator(): ValidatorFn {
         };
       }
 
-      const isArrayOfObjects = Util.isArrayOfObjects(parsedValue);
+      const isArrayOfPlainObjects = Util.isArrayOfPlainObjects(parsedValue);
 
-      if (!isArrayOfObjects) {
+      if (!isArrayOfPlainObjects) {
         return {
           json: 'Value must be an array of plain objects',
         };

@@ -1,10 +1,9 @@
 import { Component, effect, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { isEqual } from 'lodash-es';
 import { map } from 'rxjs';
 import { Util } from '../../../util';
 import { DataService } from '../../services/data.service';
-import { TableItems } from '../../types/table.type';
+import { TableItem } from '../../types/table.type';
 
 @Component({
   selector: 'app-result',
@@ -12,7 +11,7 @@ import { TableItems } from '../../types/table.type';
   styleUrls: ['./result.component.scss'],
 })
 export class ResultComponent {
-  public items = signal<TableItems>([], { equal: isEqual });
+  public items = signal<TableItem[]>([]);
 
   public dataType = toSignal(this.dataService.dataType$);
 
