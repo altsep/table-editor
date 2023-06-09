@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators } from '@angular/forms';
-import { csvValidator } from '../../directives/csv-validator.directive';
-import { jsonValidator } from '../../directives/json-validator.directive';
 import { DataService } from '../../services/data.service';
+import { csvValidator } from '../../validators/csv-validator';
+import { jsonValidator } from '../../validators/json-validator';
 
 @Component({
   selector: 'app-input',
