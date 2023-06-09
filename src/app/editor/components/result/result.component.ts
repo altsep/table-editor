@@ -28,7 +28,7 @@ export class ResultComponent {
 
   public unload(): void {
     const dataType = this.dataService.getDataType();
-    const mutatedData = Util.toData(this.items, dataType);
+    const mutatedData = Util.toDataString(this.items, dataType);
     this.dataService.outputData$.next(mutatedData);
   }
 }

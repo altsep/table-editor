@@ -61,7 +61,7 @@ export class Util {
     return [];
   }
 
-  public static toData(items: TableItem[], dataType: DataType = 'json'): string {
+  public static toDataString(items: TableItem[], dataType: DataType = 'json'): string {
     let data = '';
 
     if (items != null) {

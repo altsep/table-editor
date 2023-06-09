@@ -19,7 +19,7 @@ export class ResultFileSaverComponent {
   public onSaveAsFile(): void {
     if (this.items != null && this.dataType != null) {
       const mimeType = this.determineMimeType();
-      const mutatedData = Util.toData(this.items, this.dataType);
+      const mutatedData = Util.toDataString(this.items, this.dataType);
       const blob = new Blob([mutatedData], { type: `${mimeType};charset=utf-8` });
       FileSaver.saveAs(blob, `Untitled.${this.dataType}`);
     }
