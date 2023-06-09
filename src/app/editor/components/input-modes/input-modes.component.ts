@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { DataType } from '../../models/dataFormat.type';
 import { DataService } from '../../services/data.service';
+import { DataType } from '../../types/dataFormat.type';
 
 @Component({
   selector: 'app-input-modes',

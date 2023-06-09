@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DataType } from '../models/dataFormat.type';
-import { TableItems } from '../models/table.type';
 import { Util } from '../../util';
+import { DataType } from '../types/dataFormat.type';
+import { TableItems } from '../types/table.type';
 
 @Pipe({
   name: 'items',

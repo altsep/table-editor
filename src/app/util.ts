@@ -1,5 +1,5 @@
 import { isPlainObject } from 'lodash-es';
-import { TableItems } from './editor/models/table.type';
+import { TableItems } from './editor/types/table.type';
 
 export class Util {
   public static isArrayOfObjects(value: unknown): boolean {

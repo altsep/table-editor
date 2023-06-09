@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DATA_FORMATS, STORAGE_KEY_PREFIX } from '../../constants';
-import { DataType } from '../models/dataFormat.type';
+import { DataType } from '../types/dataFormat.type';
 
 @Injectable({
   providedIn: 'root',

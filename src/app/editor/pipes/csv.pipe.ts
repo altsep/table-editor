@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { isObject } from 'lodash-es';
-import { TableItems } from '../models/table.type';
+import { TableItems } from '../types/table.type';
 
 @Pipe({
   name: 'csv',
