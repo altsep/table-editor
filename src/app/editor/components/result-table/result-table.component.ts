@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { isEqual, isObjectLike } from 'lodash-es';
-import { Util } from '../../../util';
 import { TableItems } from '../../types/table.type';
 
 interface Col {
@@ -30,8 +29,6 @@ export class ResultTableComponent {
   }
 
   @Output() public itemsChange = new EventEmitter<TableItems>();
-
-  constructor(public utilService: Util) {}
 
   public isObjectLike = isObjectLike;
 
