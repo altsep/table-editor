@@ -1,12 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { isEqual, isObjectLike } from 'lodash-es';
-import { TableItems } from '../../models/table.type';
-import { UtilService } from '../../services/util.service';
-
-interface Col {
-  name: string;
-  sortType?: 'asc' | 'desc';
-}
+import { isObjectLike } from 'lodash-es';
+import { Util } from '../../../util';
+import { TableItem } from '../../types/table.type';
 
 @Component({
   selector: 'app-result-table',
@@ -14,45 +9,36 @@ interface Col {
   styleUrls: ['./result-table.component.scss'],
 })
 export class ResultTableComponent {
-  public cols: Col[] = [];
+  public cols: string[] = [];
 
-  private _items: TableItems = [];
+  private _items: TableItem[] = [];
 
-  public get items(): TableItems {
+  public get items(): TableItem[] {
     return this._items;
   }
 
-  @Input() public set items(value: TableItems) {
+  @Input() public set items(value: TableItem[]) {
     if (value != null) {
       this._items = value;
-      this.setCols(value);
+      this.cols = Util.getCols(value);
     }
   }
 
-  @Output() public itemsChange = new EventEmitter<TableItems>();
+  @Output() public itemsChange = new EventEmitter<TableItem[]>();
 
-  constructor(public utilService: UtilService) {}
+  private sortType: 'asc' | 'desc' = 'asc';
 
   public isObjectLike = isObjectLike;
 
-  public sort({ name, sortType }: Col, i: number): void {
-    if (sortType === 'asc') {
+  public sortItems(name: string): void {
+    if (this.sortType === 'asc') {
       this.items = this.items.slice().sort((a, b) => (String(a[name]) > String(b[name]) ? -1 : 1));
-      this.cols[i].sortType = 'desc';
+      this.sortType = 'desc';
     } else {
       this.items = this.items.slice().sort((a, b) => (String(a[name]) > String(b[name]) ? 1 : -1));
-      this.cols[i].sortType = 'asc';
+      this.sortType = 'asc';
     }
 
     this.itemsChange.emit(this.items);
-  }
-
-  private setCols(items: TableItems): void {
-    const cols = [...new Set(items.map(Object.keys).flat())];
-    const prevCols = this.cols.map(({ name }) => name);
-
-    if (!isEqual(prevCols, cols)) {
-      this.cols = cols.map((name) => ({ name, sortType: undefined }));
-    }
   }
 }

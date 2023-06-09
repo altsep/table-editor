@@ -1,12 +1,12 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { UtilService } from '../services/util.service';
+import { Util } from '../../util';
 
 export function csvValidator(): ValidatorFn {
   return (control: AbstractControl<string | null>): ValidationErrors | null => {
     const { value } = control;
 
     if (value) {
-      const parsedValue = UtilService.parseCsv(value);
+      const parsedValue = Util.parseCsv(value);
 
       if (!parsedValue) {
         return {

@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 import * as FileSaver from 'file-saver-es';
+import { Util } from '../../../util';
+import { DataType } from '../../types/dataFormat.type';
+import { TableItem } from '../../types/table.type';
 
 @Component({
   selector: 'app-result-file-saver',
@@ -9,14 +12,15 @@ import * as FileSaver from 'file-saver-es';
 export class ResultFileSaverComponent {
   @Input() public disabled!: boolean;
 
-  @Input() public data?: string;
+  @Input() public items: TableItem[] = [];
 
-  @Input() public dataType?: string;
+  @Input() public dataType: DataType | null = null;
 
   public onSaveAsFile(): void {
-    if (this.data != null && this.dataType != null) {
+    if (this.items != null && this.dataType != null) {
       const mimeType = this.determineMimeType();
-      const blob = new Blob([this.data], { type: `${mimeType};charset=utf-8` });
+      const mutatedData = Util.toDataString(this.items, this.dataType);
+      const blob = new Blob([mutatedData], { type: `${mimeType};charset=utf-8` });
       FileSaver.saveAs(blob, `Untitled.${this.dataType}`);
     }
   }

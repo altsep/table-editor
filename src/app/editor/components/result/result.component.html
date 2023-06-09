@@ -1,9 +1,9 @@
-<ng-container *ngIf="items() as itemsArr; else itemsLengthFallback">
-  <app-result-table [items]="itemsArr" (itemsChange)="this.items.set($event)" />
+<ng-container *ngIf="items.length; else itemsLengthFallback">
+  <app-result-table [items]="items" (itemsChange)="this.items = $event" />
 
-  <div *ngIf="itemsArr.length; else itemsLengthFallback" class="btn-container d-flex gap-2 align-self-end">
-    <app-result-file-saver [disabled]="!itemsArr.length" [data]="mutatedData" [dataType]="dataType()" />
-    <button type="button" class="btn btn-primary" [disabled]="!itemsArr.length" (click)="unload()">Unload</button>
+  <div class="btn-container d-flex gap-2 align-self-end">
+    <app-result-file-saver [disabled]="!items.length" [items]="items" [dataType]="dataType$ | async" />
+    <button type="button" class="btn btn-primary" [disabled]="!items.length" (click)="unload()">Unload</button>
   </div>
 </ng-container>
 

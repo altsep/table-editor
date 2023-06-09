@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { DataType } from '../../models/dataFormat.type';
+import { DataType } from '../../types/dataFormat.type';
 
 @Component({
   selector: 'app-input-area',

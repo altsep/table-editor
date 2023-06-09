@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators } from '@angular/forms';
-import { csvValidator } from '../../directives/csv-validator.directive';
-import { jsonValidator } from '../../directives/json-validator.directive';
 import { DataService } from '../../services/data.service';
+import { csvValidator } from '../../validators/csv-validator';
+import { jsonValidator } from '../../validators/json-validator';
 
 @Component({
   selector: 'app-input',
@@ -16,7 +16,7 @@ export class InputComponent {
     csv: this.fb.control('', [Validators.required, csvValidator()]),
   });
 
-  public dataType = this.dataFormatService.getDataType();
+  public dataType = this.dataService.getDataType();
 
   public get data(): string {
     return this.form.controls[this.dataType].value || '';
@@ -24,21 +24,22 @@ export class InputComponent {
 
   public set data(value: string | undefined) {
     if (value != null) {
-      this.form.controls[this.dataType].setValue(value);
+      const control = this.form.controls[this.dataType];
+      control.setValue(value);
     }
   }
 
-  constructor(private fb: FormBuilder, private dataFormatService: DataService, private dataService: DataService) {
-    this.dataFormatService.dataType$.pipe(takeUntilDestroyed()).subscribe((mode) => {
+  constructor(private fb: FormBuilder, private dataService: DataService) {
+    this.dataService.dataType$.pipe(takeUntilDestroyed()).subscribe((mode) => {
       this.dataType = mode;
     });
 
-    this.dataService.data$.pipe(takeUntilDestroyed()).subscribe((data) => {
+    this.dataService.outputData$.pipe(takeUntilDestroyed()).subscribe((data) => {
       this.data = data;
     });
   }
 
   public load(): void {
-    this.dataService.data$.next(this.data);
+    this.dataService.inputData$.next(this.data);
   }
 }

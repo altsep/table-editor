@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DATA_FORMATS, STORAGE_KEY_PREFIX } from '../../constants';
-import { DataType } from '../models/dataFormat.type';
+import { DataType } from '../types/dataFormat.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  public data$ = new Subject<string>();
-
   public readonly modes = DATA_FORMATS;
 
-  private storageKey = `${STORAGE_KEY_PREFIX}-mode`;
+  private readonly storageKey = `${STORAGE_KEY_PREFIX}-mode`;
+
+  public inputData$ = new Subject<string>();
+
+  public outputData$ = new Subject<string>();
 
   public dataType$ = new BehaviorSubject<DataType>(
     <DataType | null>localStorage.getItem(this.storageKey) || this.modes[0]

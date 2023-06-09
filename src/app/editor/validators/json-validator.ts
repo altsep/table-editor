@@ -1,12 +1,12 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { UtilService } from '../services/util.service';
+import { Util } from '../../util';
 
 export function jsonValidator(): ValidatorFn {
   return (control: AbstractControl<string | null>): ValidationErrors | null => {
     const { value } = control;
 
     if (value) {
-      const parsedValue = UtilService.parseJson(value);
+      const parsedValue = Util.parseJson(value);
 
       if (!parsedValue) {
         return {
@@ -14,9 +14,9 @@ export function jsonValidator(): ValidatorFn {
         };
       }
 
-      const isArrayOfObjects = UtilService.isArrayOfObjects(parsedValue);
+      const isArrayOfPlainObjects = Util.isArrayOfPlainObjects(parsedValue);
 
-      if (!isArrayOfObjects) {
+      if (!isArrayOfPlainObjects) {
         return {
           json: 'Value must be an array of plain objects',
         };

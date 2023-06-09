@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { DataType } from '../../models/dataFormat.type';
 import { DataService } from '../../services/data.service';
+import { DataType } from '../../types/dataFormat.type';
 
 @Component({
   selector: 'app-input-modes',
@@ -8,13 +8,13 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./input-modes.component.scss'],
 })
 export class InputModesComponent {
-  public modes = this.dataFormatService.modes;
+  public modes = this.dataService.modes;
 
   @Input() public dataType!: DataType;
 
-  constructor(private dataFormatService: DataService) {}
+  constructor(private dataService: DataService) {}
 
   public onClick(value: DataType): void {
-    this.dataFormatService.setMode(value);
+    this.dataService.setMode(value);
   }
 }
