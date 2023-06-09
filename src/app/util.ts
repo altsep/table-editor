@@ -1,11 +1,7 @@
-import { Injectable } from '@angular/core';
 import { isPlainObject } from 'lodash-es';
-import { TableItems } from '../models/table.type';
+import { TableItems } from './editor/models/table.type';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class UtilService {
+export class Util {
   public static isArrayOfObjects(value: unknown): boolean {
     return Array.isArray(value) && value.every(isPlainObject);
   }

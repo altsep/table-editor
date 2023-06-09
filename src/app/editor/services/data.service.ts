@@ -7,11 +7,11 @@ import { DataType } from '../models/dataFormat.type';
   providedIn: 'root',
 })
 export class DataService {
-  public data$ = new Subject<string>();
-
   public readonly modes = DATA_FORMATS;
 
-  private storageKey = `${STORAGE_KEY_PREFIX}-mode`;
+  private readonly storageKey = `${STORAGE_KEY_PREFIX}-mode`;
+
+  public data$ = new Subject<string>();
 
   public dataType$ = new BehaviorSubject<DataType>(
     <DataType | null>localStorage.getItem(this.storageKey) || this.modes[0]

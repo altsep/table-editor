@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DataType } from '../models/dataFormat.type';
 import { TableItems } from '../models/table.type';
-import { UtilService } from '../services/util.service';
+import { Util } from '../../util';
 
 @Pipe({
   name: 'items',
@@ -12,7 +12,7 @@ export class ItemsPipe implements PipeTransform {
     if (value != null) {
       switch (dataType) {
         case 'json': {
-          const parsedValue = UtilService.parseJson(value);
+          const parsedValue = Util.parseJson(value);
 
           if (parsedValue != null) {
             return parsedValue;
@@ -21,7 +21,7 @@ export class ItemsPipe implements PipeTransform {
           break;
         }
         case 'csv': {
-          const parsedValue = UtilService.parseCsv(value);
+          const parsedValue = Util.parseCsv(value);
 
           if (parsedValue != null) {
             return parsedValue;

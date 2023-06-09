@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { isEqual, isObjectLike } from 'lodash-es';
 import { TableItems } from '../../models/table.type';
-import { UtilService } from '../../services/util.service';
+import { Util } from '../../../util';
 
 interface Col {
   name: string;
@@ -31,7 +31,7 @@ export class ResultTableComponent {
 
   @Output() public itemsChange = new EventEmitter<TableItems>();
 
-  constructor(public utilService: UtilService) {}
+  constructor(public utilService: Util) {}
 
   public isObjectLike = isObjectLike;
 
