@@ -1,4 +1,5 @@
-import { isPlainObject } from 'lodash-es';
+import { isObject, isPlainObject } from 'lodash-es';
+import { DataType } from './editor/types/dataFormat.type';
 import { TableItems } from './editor/types/table.type';
 
 export class Util {
@@ -9,8 +10,8 @@ export class Util {
   public static parseJson(value: string): TableItems | null {
     try {
       const lineBreakRegex = /[\r\n]+/g;
-      const noBreaksValue = value.replace(lineBreakRegex, '');
-      return JSON.parse(noBreaksValue) as TableItems;
+      const noLineBreaksValue = value.replace(lineBreakRegex, '');
+      return JSON.parse(noLineBreaksValue) as TableItems;
     } catch (error) {
       return null;
     }
@@ -45,5 +46,52 @@ export class Util {
     }
 
     return null;
+  }
+
+  public static toCsv(value?: TableItems | null): string | undefined {
+    if (value != null) {
+      const cols = [[...new Set(value.map(Object.keys).flat())].join(',')];
+
+      const rows = value.map((item) =>
+        Object.values(item)
+          .map((v) => (isObject(v) ? JSON.stringify(v) : v))
+          .join(',')
+      );
+
+      const csv = cols.concat(rows).join('\n');
+
+      return csv;
+    }
+
+    return undefined;
+  }
+
+  public static toItems(value: string | undefined, dataType: DataType = 'json'): TableItems | undefined {
+    if (value != null) {
+      switch (dataType) {
+        case 'json': {
+          const parsedValue = Util.parseJson(value);
+
+          if (parsedValue != null) {
+            return parsedValue;
+          }
+
+          break;
+        }
+        case 'csv': {
+          const parsedValue = Util.parseCsv(value);
+
+          if (parsedValue != null) {
+            return parsedValue;
+          }
+
+          break;
+        }
+        default:
+          return undefined;
+      }
+    }
+
+    return undefined;
   }
 }

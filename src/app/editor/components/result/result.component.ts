@@ -2,8 +2,7 @@ import { Component, effect, signal } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { isEqual } from 'lodash-es';
 import { map } from 'rxjs';
-import { CsvPipe } from '../../pipes/csv.pipe';
-import { ItemsPipe } from '../../pipes/items.pipe';
+import { Util } from '../../../util';
 import { DataService } from '../../services/data.service';
 import { TableItems } from '../../types/table.type';
 
@@ -11,7 +10,6 @@ import { TableItems } from '../../types/table.type';
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss'],
-  providers: [ItemsPipe, CsvPipe],
 })
 export class ResultComponent {
   public items = signal<TableItems>([], { equal: isEqual });
@@ -20,7 +18,7 @@ export class ResultComponent {
 
   public mutatedData?: string;
 
-  constructor(private dataService: DataService, itemsPipe: ItemsPipe, private csvPipe: CsvPipe) {
+  constructor(private dataService: DataService) {
     effect(() => {
       this.setMutatedData();
     });
@@ -28,7 +26,7 @@ export class ResultComponent {
     dataService.data$
       .pipe(
         takeUntilDestroyed(),
-        map((value) => itemsPipe.transform(value, this.dataType()) || [])
+        map((value) => Util.toItems(value, this.dataType()) || [])
       )
       .subscribe((items) => this.items.set(items));
   }
@@ -49,7 +47,7 @@ export class ResultComponent {
           this.mutatedData = JSON.stringify(items);
           break;
         case 'csv':
-          this.mutatedData = this.csvPipe.transform(items);
+          this.mutatedData = Util.toCsv(items);
           break;
         default:
       }
