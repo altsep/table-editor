@@ -19,16 +19,20 @@ export class Util {
   }
 
   public static parseCsv(value: string): TableItem[] | null {
-    const records = csv.parse(value, {
-      columns: true,
-      skip_empty_lines: true,
-    }) as TableItem[];
+    try {
+      const records = csv.parse(value, {
+        columns: true,
+        skip_empty_lines: true,
+      }) as TableItem[];
 
-    if (records.length) {
+      if (!records.length) {
+        throw new Error();
+      }
+
       return records;
+    } catch (error) {
+      return null;
     }
-
-    return null;
   }
 
   public static getCols(value: TableItem[]): string[] {

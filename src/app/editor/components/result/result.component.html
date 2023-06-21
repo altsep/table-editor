@@ -2,8 +2,8 @@
   <app-result-table [items]="items" (itemsChange)="this.items = $event" />
 
   <div class="btn-container d-flex gap-2 align-self-end">
-    <app-result-file-saver [disabled]="!items.length" [items]="items" [dataType]="dataType$ | async" />
-    <button type="button" class="btn btn-primary" [disabled]="!items.length" (click)="unload()">Unload</button>
+    <app-result-file-saver [items]="items" [dataType]="dataType" />
+    <button type="button" class="btn btn-primary" (click)="unload()">Unload</button>
   </div>
 </ng-container>
 

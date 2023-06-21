@@ -1,7 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { skip } from 'rxjs';
-import { DataService } from '../../services/data.service';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-input-file',
@@ -10,14 +7,6 @@ import { DataService } from '../../services/data.service';
 })
 export class InputFileComponent {
   @Output() public dataChange = new EventEmitter<string>();
-
-  @ViewChild('input') public inputRef!: ElementRef<HTMLInputElement>;
-
-  constructor(dataService: DataService) {
-    dataService.dataType$.pipe(takeUntilDestroyed(), skip(1)).subscribe(() => {
-      this.inputRef.nativeElement.value = '';
-    });
-  }
 
   public async onChange(e: Event): Promise<void> {
     const target = e.target as HTMLInputElement;

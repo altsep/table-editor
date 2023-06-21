@@ -14,7 +14,7 @@ export class ResultFileSaverComponent {
 
   @Input() public items: TableItem[] = [];
 
-  @Input() public dataType: DataType | null = null;
+  @Input() public dataType!: DataType;
 
   public onSaveAsFile(): void {
     if (this.items != null && this.dataType != null) {

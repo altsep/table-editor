@@ -1,4 +1,4 @@
-<app-input-modes [dataType]="dataType" />
+<app-input-modes (dataTypeChange)="dataType = $event; dataTypeChange.emit($event)" [dataType]="dataType" />
 
 <app-input-file (dataChange)="data = $event" />
 

@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { DataService } from '../../services/data.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DATA_FORMATS, STORAGE_KEY_PREFIX } from '../../../constants';
 import { DataType } from '../../types/dataFormat.type';
 
 @Component({
@@ -8,13 +8,14 @@ import { DataType } from '../../types/dataFormat.type';
   styleUrls: ['./input-modes.component.scss'],
 })
 export class InputModesComponent {
-  public modes = this.dataService.modes;
+  public modes = DATA_FORMATS;
 
   @Input() public dataType!: DataType;
 
-  constructor(private dataService: DataService) {}
+  @Output() public dataTypeChange = new EventEmitter<DataType>();
 
-  public onClick(value: DataType): void {
-    this.dataService.setMode(value);
+  public onClick(mode: DataType): void {
+    this.dataTypeChange.emit(mode);
+    localStorage.setItem(`${STORAGE_KEY_PREFIX}-mode`, mode);
   }
 }
