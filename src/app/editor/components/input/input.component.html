@@ -1,6 +1,6 @@
 <app-input-modes (dataTypeChange)="dataType = $event; dataTypeChange.emit($event)" [dataType]="dataType" />
 
-<app-input-file (dataChange)="data = $event" />
+<app-input-file [dataType]="dataType" (dataChange)="data = $event" />
 
 <app-input-area [dataType]="dataType" [control]="control" />
 
