@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './editor-page.component.html',
   styleUrls: ['./editor-page.component.scss'],
 })
-export class EditorPageComponent {}
+export class EditorPageComponent {
+  public data = '';
+}

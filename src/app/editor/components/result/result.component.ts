@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Util } from '../../../util';
 import { DataService } from '../../services/data.service';
 import { TableItem } from '../../types/table.type';
@@ -15,20 +13,17 @@ export class ResultComponent {
 
   public dataType$ = this.dataService.dataType$;
 
-  constructor(public dataService: DataService) {
-    dataService.inputData$
-      .pipe(
-        takeUntilDestroyed(),
-        map((value) => Util.toItems(value, dataService.getDataType()))
-      )
-      .subscribe((items) => {
-        this.items = items;
-      });
+  @Input() public set data(value: string) {
+    this.items = Util.toItems(value, this.dataService.getDataType());
   }
+
+  @Output() public dataChange = new EventEmitter<string>();
+
+  constructor(public dataService: DataService) {}
 
   public unload(): void {
     const dataType = this.dataService.getDataType();
     const mutatedData = Util.toDataString(this.items, dataType);
-    this.dataService.outputData$.next(mutatedData);
+    this.dataChange.emit(mutatedData);
   }
 }
