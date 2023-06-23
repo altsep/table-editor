@@ -9,24 +9,13 @@ import { TableItem } from '../../types/table.type';
   styleUrls: ['./result-table.component.scss'],
 })
 export class ResultTableComponent {
-  public cols: string[] = [];
-
-  private _items: TableItem[] = [];
-
-  public get items(): TableItem[] {
-    return this._items;
-  }
-
-  @Input() public set items(value: TableItem[]) {
-    if (value != null) {
-      this._items = value;
-      this.cols = Util.getCols(value);
-    }
-  }
+  @Input() public items: TableItem[] = [];
 
   @Output() public itemsChange = new EventEmitter<TableItem[]>();
 
   private sortType: 'asc' | 'desc' = 'asc';
+
+  public getCols = Util.getCols;
 
   public isObjectLike = isObjectLike;
 

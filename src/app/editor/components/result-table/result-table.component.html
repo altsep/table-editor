@@ -1,7 +1,7 @@
 <table class="table table-striped table-bordered" style="table-layout: fixed">
   <thead>
     <tr>
-      <th class="col" *ngFor="let col of cols; index as i" (click)="sortItems(col)">
+      <th class="col" *ngFor="let col of getCols(items); index as i" (click)="sortItems(col)">
         <div class="d-flex justify-content-between">
           <span>{{ col }}</span>
         </div>
@@ -11,7 +11,7 @@
   <tbody>
     <tr *ngFor="let item of items; index as i">
       <td
-        *ngFor="let col of cols"
+        *ngFor="let col of getCols(items)"
         contenteditable
         #details
         (blur)="items[i][col] = details.innerText; itemsChange.emit(items)"

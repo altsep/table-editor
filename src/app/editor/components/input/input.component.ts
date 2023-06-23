@@ -10,7 +10,7 @@ import { jsonValidator } from '../../validators/json-validator';
   styleUrls: ['./input.component.scss'],
 })
 export class InputComponent implements OnChanges {
-  public control = new FormControl('', [Validators.required]);
+  public control = new FormControl('', Validators.required);
 
   public get data(): string {
     return <string>this.control.value;
@@ -20,9 +20,9 @@ export class InputComponent implements OnChanges {
     this.control.setValue(value);
   }
 
-  @Output() public dataChange = new EventEmitter<string>();
-
   @Input() public dataType!: DataType;
+
+  @Output() public dataChange = new EventEmitter<string>();
 
   @Output() public dataTypeChange = new EventEmitter<DataType>();
 
