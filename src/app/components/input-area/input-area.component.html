@@ -2,8 +2,7 @@
 <textarea
   class="form-control"
   id="formTextarea"
-  name="textarea"
   rows="3"
   [placeholder]="'Please input ' + (dataType | uppercase) + ' data and press Continue'"
-  [formControl]="control"
+  [formControl]="$any(control)"
 ></textarea>

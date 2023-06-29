@@ -1,7 +1,7 @@
 import * as csv from 'csv/browser/esm/sync';
 import { isPlainObject } from 'lodash-es';
-import { DataType } from './editor/types/dataFormat.type';
-import { TableItem } from './editor/types/table.type';
+import { DataType } from './types/dataFormat.type';
+import { TableItem } from './types/table.type';
 
 export class Util {
   public static isArrayOfPlainObjects(value: unknown): boolean {

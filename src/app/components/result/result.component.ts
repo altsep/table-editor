@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Util } from '../../../util';
 import { DataType } from '../../types/dataFormat.type';
 import { TableItem } from '../../types/table.type';
+import { Util } from '../../util';
 
 @Component({
   selector: 'app-result',

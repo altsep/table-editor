@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { isObjectLike } from 'lodash-es';
-import { Util } from '../../../util';
 import { TableItem } from '../../types/table.type';
+import { Util } from '../../util';
 
 @Component({
   selector: 'app-result-table',

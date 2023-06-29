@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { STORAGE_KEY_PREFIX, DATA_FORMATS } from './constants';
+import { DataType } from './types/dataFormat.type';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public title = 'table-editor';
+  public data = '';
+
+  public dataType: DataType = <DataType | null>localStorage.getItem(`${STORAGE_KEY_PREFIX}-mode`) || DATA_FORMATS[0];
 }

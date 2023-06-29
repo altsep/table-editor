@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import * as FileSaver from 'file-saver-es';
-import { Util } from '../../../util';
 import { DataType } from '../../types/dataFormat.type';
 import { TableItem } from '../../types/table.type';
+import { Util } from '../../util';
 
 @Component({
   selector: 'app-result-file-saver',

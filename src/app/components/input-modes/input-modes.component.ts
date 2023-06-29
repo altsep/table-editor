@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DATA_FORMATS, STORAGE_KEY_PREFIX } from '../../../constants';
+import { DATA_FORMATS, STORAGE_KEY_PREFIX } from '../../constants';
 import { DataType } from '../../types/dataFormat.type';
 
 @Component({

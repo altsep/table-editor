@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Util } from '../../util';
+import { Util } from '../util';
 
 export function jsonValidator(): ValidatorFn {
   return (control: AbstractControl<string | null>): ValidationErrors | null => {
